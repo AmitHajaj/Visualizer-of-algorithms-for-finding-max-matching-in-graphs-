@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.jgrapht.*;
 
-public class MyFrame extends JFrame{
+public class MyFrame extends JFrame implements ActionListener{
     JPanel sideMenu;
     Board workingArea;
 
@@ -38,10 +38,12 @@ public class MyFrame extends JFrame{
         //Add buttons to our UI.
         addVertex = new JButton("Add vertex");
         addVertex.setBounds(10, 10, 140, 75);
+        addVertex.addActionListener(this);
         sideMenu.add(addVertex);
 
         removeVertex = new JButton("Remove vertex");
         removeVertex.setBounds(10, 175, 140, 75);
+        removeVertex.addActionListener(this);
         sideMenu.add(removeVertex);
 
         connect = new JButton("Connect");
@@ -50,14 +52,17 @@ public class MyFrame extends JFrame{
 
         disconnect = new JButton("Disconnect");
         disconnect.setBounds(10, 505, 140, 75);
+        disconnect.addActionListener(this);
         sideMenu.add(disconnect);
 
         findMaxMatch = new JButton("Find max. match");
         findMaxMatch.setBounds(10, 670, 140, 75);
+        findMaxMatch.addActionListener(this);
         sideMenu.add(findMaxMatch);
 
         clean = new JButton("Clean board");
         clean.setBounds(10, 835, 140, 75);
+        clean.addActionListener(this);
         sideMenu.add(clean);
 
     }
@@ -71,4 +76,24 @@ public class MyFrame extends JFrame{
         this.workingArea.setBounds(x, y, width, height);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        String actionCommand = e.getActionCommand();
+
+        switch( actionCommand){
+            case "Add vertex":
+                break;
+            case "Remove vertex":
+                break;
+            case "Connect":
+                break;
+            case "Disconnect":
+                break;
+            case "Find max. match":
+                break;
+            case "Clean board":
+                break;
+        }
+    }
 }
