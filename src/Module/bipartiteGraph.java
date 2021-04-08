@@ -1,26 +1,30 @@
 package Module;
 import org.jgrapht.*;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class represent a bipartite graph with a graph object and two sets of vertices.
+ */
 public class bipartiteGraph {
-    private Graph<Integer, DefaultEdge> g;
+    private DefaultUndirectedGraph<Integer, DefaultEdge> g;
     Set<Integer> A;
     Set<Integer> B;
 
-    public bipartiteGraph(Graph<Integer, DefaultEdge> g) {
+    public bipartiteGraph(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
         this.g = g;
         A = new HashSet<Integer>();
         B = new HashSet<Integer>();
     }
 
-    public Graph<Integer, DefaultEdge> getG() {
+    public DefaultUndirectedGraph<Integer, DefaultEdge> getG() {
         return g;
     }
 
-    public void setG(Graph<Integer, DefaultEdge> g) {
+    public void setG(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
         this.g = g;
     }
 
@@ -32,11 +36,30 @@ public class bipartiteGraph {
         A.add(n);
     }
 
+    public void removeFromA(int n){
+        A.remove(n);
+    }
+
     public Set<Integer> getB() {
         return B;
     }
 
     public void addToB(int n) {
         B.add(n);
+    }
+
+
+    public void removeFromB(int n){
+        B.remove(n);
+    }
+
+    public void addVertex(int n){
+        if(n%2 == 0){
+            this.addToA(n);
+        }
+        else{
+            this.addToB(n);
+        }
+        this.g.addVertex(n);
     }
 }

@@ -1,28 +1,20 @@
-package Controller;
+package test;
 
-import GUI.graphFrame;
-import org.jgrapht.Graph;
-import org.jgrapht.generate.CompleteBipartiteGraphGenerator;
+import org.jgrapht.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.*;
-import Module.bipartiteGraph;
 
-import java.util.Set;
 import Module.*;
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class graph {
+import java.util.*;
 
-    public static void main(String[] args){
-//        DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
-//        bipartiteGraph bg = new bipartiteGraph(g);
-//        graphFrame frame = new graphFrame(bg);
-//
-//        //set the window size
-//        frame.setSideMenuSize(0, 0, 150, 1000);
-//        frame.setWorkingAreaSize(150, 0, 850, 1000);
+public class HungarianTest {
 
+    @Test
+    void Hungarian_Method(){
         DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
         bipartiteGraph graph = new bipartiteGraph(g);
 
@@ -43,5 +35,6 @@ public class graph {
         Set<DefaultEdge> M = algo.Hungarian(graph);
 
         System.out.println(M.toString());
+
     }
 }

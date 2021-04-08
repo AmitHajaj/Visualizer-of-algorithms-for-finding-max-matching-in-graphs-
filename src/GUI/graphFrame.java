@@ -6,14 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.jgrapht.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import Module.bipartiteGraph;
-
+import Module.Hungarian_Method;
 public class graphFrame extends JFrame implements ActionListener{
     private static int numOfNodes = 0;
 
@@ -26,7 +28,9 @@ public class graphFrame extends JFrame implements ActionListener{
     JButton disconnect;
     JButton findMaxMatch;
     JButton clean;
+
     bipartiteGraph graph;
+    Hungarian_Method algo;
 
     public graphFrame(bipartiteGraph g){
         super("Graph visualizer");
@@ -36,6 +40,7 @@ public class graphFrame extends JFrame implements ActionListener{
         this.setVisible(true);
 
         this.graph = g;
+        this.algo = new Hungarian_Method(g);
 
         sideMenu = new JPanel();
         workingArea = new Board();
@@ -89,12 +94,12 @@ public class graphFrame extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         String actionCommand = e.getActionCommand();
-        DefaultEdge edge;
+        Set<DefaultEdge> M = new HashSet<DefaultEdge>();
 
         // TODO use proxy graph?
         switch(actionCommand){
             case "Add vertex":
-                // Even vertices go to A, odd ones go to B.
+                // Even vertices go to A. Odd vertices go to B.
                 if(numOfNodes%2 == 0){
                     this.graph.addToA(numOfNodes);
                 }
@@ -102,23 +107,30 @@ public class graphFrame extends JFrame implements ActionListener{
                     this.graph.addToB(numOfNodes);
                 }
                 this.graph.getG().addVertex(numOfNodes++);
+                workingArea.drawNode(numOfNodes,this.workingArea.getGraphics());
                 break;
             case "Remove vertex":
                 // TODO: Add here a dialog box to get from the user the vertex to remove.
+                if(this.graph.getA().contains(0)){
+                    this.graph.removeFromA(0);
+                }
+                else{
+                    this.graph.removeFromB(0);
+                }
                 this.graph.getG().removeVertex(0);
+                numOfNodes--;
                 break;
             case "Connect":
-                edge = new DefaultEdge();
-                //TODO check if both needed
-                this.graph.getG().addEdge(1,0, edge);
-                this.graph.getG().setEdgeWeight(edge,2);
+                // TODO:  Add here a dialog box to get from the user the vertices to connect.
+                this.graph.getG().addEdge(0, 1);
                 break;
             case "Disconnect":
-                edge = this.graph.getG().getEdge(1, 0);
-                this.graph.getG().removeEdge(edge);
+                // TODO:  Add here a dialog box to get from the user the vertices to connect.
+                this.graph.getG().removeEdge(1, 0);
                 break;
             case "Find max. match":
-                //
+                // TODO: call the Hungarian on the current graph.
+                M = algo.Hungarian(this.graph);
                 break;
             case "Clean board":
 //                this.graph.removeAllVertices();

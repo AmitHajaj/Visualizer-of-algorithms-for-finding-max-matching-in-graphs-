@@ -19,9 +19,11 @@ public class Board extends JPanel {
 
     }
 
-    public void drawNode (int n, int x, int y, Graphics g){
-        g.drawOval(x, y, 30, 30);
-        g.drawString("" + n, x+13, y+20);
+    public void drawNode (int n, Graphics g){
+        if(n%2 == 0){
+            g.drawOval(175, 500, 30, 30);
+            g.drawString("" + n, 175+13, 500+20);
+        }
     }
 
 }
