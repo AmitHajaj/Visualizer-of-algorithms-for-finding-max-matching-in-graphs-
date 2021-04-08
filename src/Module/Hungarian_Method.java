@@ -11,15 +11,19 @@ import javax.management.DescriptorAccess;
 import java.util.*;
 
 public class Hungarian_Method {
+    Graph<Integer, DefaultEdge> graph;
+
+    public Hungarian_Method( Graph<Integer, DefaultEdge> g){
+        this.graph = g;
+    }
 
     /**
-     *This method will apply the Hungarian method for finding a max. matching in bipartite graphs.
-     * @param g - The graph we search in.
+     *This method will apply the Hungarian method for finding a max. matching in bipartite graphs
      * @param A - One side of the bipartite graph.
      * @param B - The other side of the bipartite graph.
      * @return A Set of edges that would be the max. matching in this graph.
      */
-    public Set<DefaultEdge> Hungarian(Graph<Integer, DefaultEdge> g, Set<Integer> A, Set<Integer> B){
+    public Set<DefaultEdge> Hungarian(Set<Integer> A, Set<Integer> B){
         Set<DefaultEdge> M = new HashSet<DefaultEdge>();
         int bSize = 0;
         int aSize = 0;
@@ -28,7 +32,7 @@ public class Hungarian_Method {
 
         while(flag){
             bSize = M.size();
-            M = this.IsAugmenting(A, B, g, M);
+            M = this.IsAugmenting(A, B, M);
             aSize = M.size();
             if(aSize == bSize){
                 flag = false;
@@ -43,10 +47,9 @@ public class Hungarian_Method {
      @param A - one side of a bipartite graph
      @param B - second side of a bipartite graph
      @param M - a match on this graph
-     @param g - the graph we will work on.
      @return An augmenting path for match M if there is one, or M itself if there isnt.
      */
-    public Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Graph<Integer, DefaultEdge> g, Set<DefaultEdge> M){
+    public Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Set<DefaultEdge> M){
         Set<Integer> A1 = new HashSet<Integer>();
         Set<Integer> A2 = A;
         Set<Integer> B1 = new HashSet<Integer>();
@@ -57,8 +60,8 @@ public class Hungarian_Method {
         int tempDst;
 
         for(DefaultEdge e: M){
-            tempSrc = g.getEdgeSource(e);
-            tempDst = g.getEdgeTarget(e);
+            tempSrc =this.graph.getEdgeSource(e);
+            tempDst =this.graph.getEdgeTarget(e);
 
             A1.add(tempSrc);
             A2.remove(tempSrc);
@@ -77,9 +80,9 @@ public class Hungarian_Method {
         HashSet<DefaultEdge> A2ToB1 = new HashSet<DefaultEdge>();//Group #3, like group #2 but in the opposite direction.
         HashSet<DefaultEdge> A2ToB2 = new HashSet<DefaultEdge>();//Group #4, edges that none of the nodes is in the current matching.
 
-        for(DefaultEdge e: g.edgeSet()){
-            tempSrc = g.getEdgeSource(e);
-            tempDst = g.getEdgeTarget(e);
+        for(DefaultEdge e:this.graph.edgeSet()){
+            tempSrc =this.graph.getEdgeSource(e);
+            tempDst =this.graph.getEdgeTarget(e);
             if(A1.contains(tempSrc)){
                 if(B1.contains(tempDst) && !M.contains(e)){
                     A1ToB1.add(e);
@@ -104,9 +107,9 @@ public class Hungarian_Method {
 
         Graph<Integer, DefaultEdge> Dg = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-        for(DefaultEdge e: g.edgeSet()){
-            tempSrc = g.getEdgeSource(e);
-            tempDst = g.getEdgeTarget(e);
+        for(DefaultEdge e:this.graph.edgeSet()){
+            tempSrc =this.graph.getEdgeSource(e);
+            tempDst =this.graph.getEdgeTarget(e);
 
             Dg.addVertex(tempSrc);
             Dg.addVertex(tempDst);

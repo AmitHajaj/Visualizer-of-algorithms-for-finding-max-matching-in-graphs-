@@ -25,7 +25,7 @@ public class graphFrame extends JFrame implements ActionListener{
     JButton clean;
     Graph<Integer, DefaultEdge> graph;
 
-    public graphFrame( Graph<Integer, DefaultEdge> g){
+    public graphFrame( Graph<Integer, DefaultEdge> g ){
         super("Graph visualizer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000,1000);
@@ -53,6 +53,7 @@ public class graphFrame extends JFrame implements ActionListener{
 
         connect = new JButton("Connect");
         connect.setBounds(10, 340, 140, 75);
+        connect.addActionListener(this);
         sideMenu.add(connect);
 
         disconnect = new JButton("Disconnect");
@@ -86,6 +87,7 @@ public class graphFrame extends JFrame implements ActionListener{
 
         String actionCommand = e.getActionCommand();
         DefaultEdge edge;
+
         // TODO use proxy graph?
         switch( actionCommand){
             case "Add vertex":

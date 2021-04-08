@@ -5,7 +5,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-public class main {
+public class graph {
     // TODO: Add some test's to the method above.
     public static void main(String[] args){
         Graph<Integer, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);
