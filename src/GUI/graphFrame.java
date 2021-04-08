@@ -12,8 +12,11 @@ import java.util.List;
 import org.jgrapht.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import Module.bipartiteGraph;
 
 public class graphFrame extends JFrame implements ActionListener{
+    private static int numOfNodes = 0;
+
     JPanel sideMenu;
     Board workingArea;
 
@@ -23,9 +26,9 @@ public class graphFrame extends JFrame implements ActionListener{
     JButton disconnect;
     JButton findMaxMatch;
     JButton clean;
-    Graph<Integer, DefaultEdge> graph;
+    bipartiteGraph graph;
 
-    public graphFrame( Graph<Integer, DefaultEdge> g ){
+    public graphFrame(bipartiteGraph g){
         super("Graph visualizer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000,1000);
@@ -89,22 +92,30 @@ public class graphFrame extends JFrame implements ActionListener{
         DefaultEdge edge;
 
         // TODO use proxy graph?
-        switch( actionCommand){
+        switch(actionCommand){
             case "Add vertex":
-                this.graph.addVertex(1);
+                // Even vertices go to A, odd ones go to B.
+                if(numOfNodes%2 == 0){
+                    this.graph.addToA(numOfNodes);
+                }
+                else{
+                    this.graph.addToB(numOfNodes);
+                }
+                this.graph.getG().addVertex(numOfNodes++);
                 break;
             case "Remove vertex":
-                this.graph.removeVertex(0);
+                // TODO: Add here a dialog box to get from the user the vertex to remove.
+                this.graph.getG().removeVertex(0);
                 break;
             case "Connect":
                 edge = new DefaultEdge();
                 //TODO check if both needed
-                this.graph.addEdge(1,0, edge);
-                this.graph.setEdgeWeight(edge,2);
+                this.graph.getG().addEdge(1,0, edge);
+                this.graph.getG().setEdgeWeight(edge,2);
                 break;
             case "Disconnect":
-                edge = this.graph.getEdge(1, 0);
-                this.graph.removeEdge(edge);
+                edge = this.graph.getG().getEdge(1, 0);
+                this.graph.getG().removeEdge(edge);
                 break;
             case "Find max. match":
                 //

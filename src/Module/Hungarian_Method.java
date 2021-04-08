@@ -12,9 +12,13 @@ import java.util.*;
 
 public class Hungarian_Method {
     Graph<Integer, DefaultEdge> graph;
+    Set<Integer> A;
+    Set<Integer> B;
 
-    public Hungarian_Method( Graph<Integer, DefaultEdge> g){
+    public Hungarian_Method(Graph<Integer, DefaultEdge> g){
         this.graph = g;
+        this.A = new HashSet<Integer>();
+        this.B = new HashSet<Integer>();
     }
 
     /**
