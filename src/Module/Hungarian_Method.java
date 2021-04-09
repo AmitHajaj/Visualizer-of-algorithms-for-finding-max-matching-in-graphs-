@@ -7,6 +7,7 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.specifics.DirectedEdgeContainer;
 import org.jgrapht.traverse.DepthFirstIterator;
 
 import javax.management.DescriptorAccess;
@@ -111,8 +112,8 @@ public class Hungarian_Method {
         }
 
         //Now we build a new DIRECTED graph as follows:
-        //  - If an edge is in matching M, then we direct it from A to B.
-        //  - Else, we direct it from B to A.
+        //  - If an edge is in matching M, then we direct it from B to A.
+        //  - Else, we direct it from A to B.
 
         Graph<Integer, DefaultEdge> Dg = new DefaultDirectedGraph<>(DefaultEdge.class);
 
@@ -124,13 +125,13 @@ public class Hungarian_Method {
             tempSrc =this.graph.getG().getEdgeSource(e);
             tempDst =this.graph.getG().getEdgeTarget(e);
 
-
+            Dg.addEdge(tempSrc, tempDst);
             for(DefaultEdge edge: M){
                 if(this.graph.getG().getEdgeSource(edge) == tempSrc && this.graph.getG().getEdgeTarget(edge) == tempDst){
                     Dg.addEdge(tempDst, tempSrc);
+                    Dg.removeEdge(tempSrc, tempDst);
                 }
             }
-            Dg.addEdge(tempSrc, tempDst);
         }
 
         // Now we need to find a path from A2 to B2.
@@ -159,16 +160,28 @@ public class Hungarian_Method {
             return M;
         }
 
-        // TODO: Fix duplicates!
         BFSShortestPath<Integer, DefaultEdge> Dp = new BFSShortestPath<>(Dg);
-        M.addAll(Dp.getPath(start, dest).getEdgeList());
+        List <DefaultEdge> augmentPath = Dp.getPath(start, dest).getEdgeList();
+        DefaultEdge temp = new DefaultEdge();
+        DefaultEdge tempRemove = new DefaultEdge();
+
+        for(int i=0; i< augmentPath.size(); i++){
+            if(i%2 == 1) {
+                temp = augmentPath.get(i);
+                Iterator<DefaultEdge> itr = M.iterator();
+                while(itr.hasNext()){
+                    tempRemove = itr.next();
+                    if(this.graph.getG().getEdgeTarget(temp) == this.graph.getG().getEdgeSource(tempRemove) &&
+                            this.graph.getG().getEdgeSource(temp) ==this.graph.getG().getEdgeTarget(tempRemove)){
+                        itr.remove();
+                    }
+                }
+                augmentPath.remove(i);
+            }
+        }
+
+        M.addAll(augmentPath);
 
         return M;
-    }
-
-    // TODO: Add some test's to check the method above.
-    public static void main(String[] args){
-        Graph <Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(DefaultEdge.class);
-
     }
 }

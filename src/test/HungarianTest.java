@@ -23,18 +23,26 @@ public class HungarianTest {
         for(int i=0; i<12; i++){
             graph.addVertex(i);
         }
-        graph.getG().addEdge(0, 3);
+        Set<DefaultEdge> ans = new HashSet<>();
+
+        ans.add(graph.getG().addEdge(0, 3));
         graph.getG().addEdge(0, 5);
-        graph.getG().addEdge(4, 1);
+        ans.add(graph.getG().addEdge(4, 1));
         graph.getG().addEdge(4, 7);
-        graph.getG().addEdge(6, 5);
+        ans.add(graph.getG().addEdge(6, 5));
         graph.getG().addEdge(8, 5);
-        graph.getG().addEdge(8, 7);
-        graph.getG().addEdge(10, 11);
+        ans.add(graph.getG().addEdge(8, 7));
+        ans.add(graph.getG().addEdge(10, 11));
 
         Set<DefaultEdge> M = algo.Hungarian(graph);
 
-        System.out.println(M.toString());
+        for(DefaultEdge edge: ans){
+            assertTrue(M.contains(M));
+        }
+
+
+
+
 
     }
 }
