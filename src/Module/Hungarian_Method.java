@@ -13,6 +13,16 @@ import org.jgrapht.traverse.DepthFirstIterator;
 import javax.management.DescriptorAccess;
 import java.util.*;
 
+/**
+ * This class is an implementation of the Hungarian method for finding a max. matching in a bipartite graph.
+ * For a given bipartite graph G= (A U B, V) where A and B are the two sides of the graph, we can apply Hungarian_method on it
+ * and we will get back the max. matching for this graph G.
+ *
+ * This version of the Hungarian method runs in O().
+ *
+ * @author Amit Hajaj, Kfir Ettinger, Shani Shuv
+ *
+ */
 public class Hungarian_Method {
     bipartiteGraph graph;
 
@@ -155,16 +165,20 @@ public class Hungarian_Method {
                 break;
             }
         }
-
         if(dest == -1){
             return M;
         }
 
+        // If we did find a reachable node in B2, we need to find the path to it and then to get the augmented path from it.
         BFSShortestPath<Integer, DefaultEdge> Dp = new BFSShortestPath<>(Dg);
         List <DefaultEdge> augmentPath = Dp.getPath(start, dest).getEdgeList();
         DefaultEdge temp = new DefaultEdge();
         DefaultEdge tempRemove = new DefaultEdge();
 
+        // The path we got is set to be:
+        //  - Odd edges is the augmenting edges.
+        //  - Even edges are edges from the old matching.
+        // To return the full augmenting path we need to take out the even edges as follows:
         for(int i=0; i< augmentPath.size(); i++){
             if(i%2 == 1) {
                 temp = augmentPath.get(i);
