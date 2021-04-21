@@ -10,22 +10,23 @@ import java.util.Set;
  * This class represent a bipartite graph with a graph object and two sets of vertices.
  */
 public class bipartiteGraph {
-    private DefaultUndirectedGraph<Integer, DefaultEdge> g;
+    private DefaultUndirectedGraph<Integer, DefaultEdge> graph;
     Set<Integer> A;
     Set<Integer> B;
 
-    public bipartiteGraph(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
-        this.g = g;
+    public bipartiteGraph() {
+        DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        this.graph = g;
         A = new HashSet<Integer>();
         B = new HashSet<Integer>();
     }
 
     public DefaultUndirectedGraph<Integer, DefaultEdge> getG() {
-        return g;
+        return graph;
     }
 
     public void setG(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
-        this.g = g;
+        this.graph = g;
     }
 
     public Set<Integer> getA() {
@@ -60,6 +61,6 @@ public class bipartiteGraph {
         else{
             this.addToB(n);
         }
-        this.g.addVertex(n);
+        this.graph.addVertex(n);
     }
 }
