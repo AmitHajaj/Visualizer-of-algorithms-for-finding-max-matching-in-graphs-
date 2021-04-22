@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class bipartiteGraph {
     private DefaultUndirectedGraph<Integer, DefaultEdge> graph;
-    private HashMap<Integer, Point> locations = new HashMap<>();
+    private HashMap<Integer, Pair> locations = new HashMap<>();
     HashSet<Integer> A;
     HashSet<Integer> B;
 
@@ -44,7 +44,7 @@ public class bipartiteGraph {
 
     public void addToA(int n) {
         A.add(n);
-        this.locations.put(n,new Point());
+        addToGraph(n);
     }
 
     public void removeFromA(int n){
@@ -57,7 +57,7 @@ public class bipartiteGraph {
 
     public void addToB(int n) {
         B.add(n);
-        this.locations.put(n,new Point());
+        addToGraph(n);
     }
 
 
@@ -66,10 +66,10 @@ public class bipartiteGraph {
     }
 
     public void setLocation(int n, int x, int y){
-        this.locations.put(n,new Point(x, y));
+        this.locations.put(n,new Pair(x, y));
     }
 
-    public Point getLocation(int n){
+    public Pair getLocation(int n){
         return this.locations.get(n);
     }
 
@@ -80,7 +80,12 @@ public class bipartiteGraph {
         else{
             this.addToB(n);
         }
-        this.locations.put(n,new Point());
+        this.locations.put(n,new Pair());
         this.graph.addVertex(n);
+    }
+
+    private void addToGraph(int n){
+        graph.addVertex(n);
+        this.locations.put(n,new Pair());
     }
 }

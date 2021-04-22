@@ -3,16 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
-import org.jgrapht.*;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-import Module.bipartiteGraph;
-import Module.Hungarian_Method;
 public class Window extends JFrame{
     private static int numOfNodes = 0;
 
@@ -43,7 +34,7 @@ public class Window extends JFrame{
     private static boolean isMenuOpen = false;
     /* pages panels: */
     private final JPanel pages = new JPanel(new CardLayout());
-    private final hungarianMethod_panel entryPanel = new hungarianMethod_panel();
+    private final Main_panel entryPanel = new Main_panel();
     private final JPanel page2 = new JPanel();
     private final JPanel page3 = new JPanel();
 
@@ -168,7 +159,7 @@ public class Window extends JFrame{
         btn_page3.setForeground(color_text_menu);
 
         btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/Icons/rightArrow.png")));
-        btn_page1.setIcon(new ImageIcon(getClass().getResource("/Icons/poke1.png")));
+        btn_page1.setIcon(new ImageIcon(getClass().getResource("/Icons/hungarianIcon.png")));
         btn_page2.setIcon(new ImageIcon(getClass().getResource("/Icons/poke2.png")));
         btn_page3.setIcon(new ImageIcon(getClass().getResource("/Icons/poke3.png")));
 
