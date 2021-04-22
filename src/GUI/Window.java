@@ -43,7 +43,7 @@ public class Window extends JFrame{
     private static boolean isMenuOpen = false;
     /* pages panels: */
     private final JPanel pages = new JPanel(new CardLayout());
-    private final mainPanel entryPanel = new mainPanel();
+    private final hungarianMethod_panel entryPanel = new hungarianMethod_panel();
     private final JPanel page2 = new JPanel();
     private final JPanel page3 = new JPanel();
 

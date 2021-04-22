@@ -1,8 +1,8 @@
 package Module;
-import org.jgrapht.*;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,8 +11,9 @@ import java.util.Set;
  */
 public class bipartiteGraph {
     private DefaultUndirectedGraph<Integer, DefaultEdge> graph;
-    Set<Integer> A;
-    Set<Integer> B;
+    private HashMap<Integer, Point> locations = new HashMap<>();
+    HashSet<Integer> A;
+    HashSet<Integer> B;
 
     public bipartiteGraph() {
         DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
@@ -29,29 +30,47 @@ public class bipartiteGraph {
         this.graph = g;
     }
 
-    public Set<Integer> getA() {
+    public void addEdge(int src, int dst){
+        this.graph.addEdge(src,dst);
+    }
+
+    public Set<DefaultEdge> getEdges(){
+        return this.graph.edgeSet();
+    }
+
+    public HashSet<Integer> getA() {
         return A;
     }
 
     public void addToA(int n) {
         A.add(n);
+        this.locations.put(n,new Point());
     }
 
     public void removeFromA(int n){
         A.remove(n);
     }
 
-    public Set<Integer> getB() {
+    public HashSet<Integer> getB() {
         return B;
     }
 
     public void addToB(int n) {
         B.add(n);
+        this.locations.put(n,new Point());
     }
 
 
     public void removeFromB(int n){
         B.remove(n);
+    }
+
+    public void setLocation(int n, int x, int y){
+        this.locations.put(n,new Point(x, y));
+    }
+
+    public Point getLocation(int n){
+        return this.locations.get(n);
     }
 
     public void addVertex(int n){
@@ -61,6 +80,7 @@ public class bipartiteGraph {
         else{
             this.addToB(n);
         }
+        this.locations.put(n,new Point());
         this.graph.addVertex(n);
     }
 }

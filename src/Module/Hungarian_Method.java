@@ -12,7 +12,7 @@ import org.jgrapht.traverse.DepthFirstIterator;
 
 import javax.management.DescriptorAccess;
 import java.util.*;
-
+import java.util.HashMap;
 /**
  * This class is an implementation of the Hungarian method for finding a max. matching in a bipartite graph.
  * For a given bipartite graph G= (A U B, V) where A and B are the two sides of the graph, we can apply Hungarian_method on it
