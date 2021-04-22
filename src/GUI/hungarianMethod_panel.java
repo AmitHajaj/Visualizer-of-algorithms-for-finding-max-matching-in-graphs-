@@ -1,6 +1,8 @@
 package GUI;
 
 import Module.*;
+import Module.Point;
+import GUI.graphParts.LineArrow;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.w3c.dom.Node;
@@ -122,7 +124,6 @@ public class hungarianMethod_panel extends JPanel {
 
     public void clear() {
         this.biGraph = new bipartiteGraph();
-
         repaint();
     }
 
@@ -164,11 +165,11 @@ public class hungarianMethod_panel extends JPanel {
             Set<DefaultEdge> edges = biGraph.getEdges();
             for (DefaultEdge e : edges) {
                 double r = 2;
-                e.getSource()
-//                biGraph.getLocation(e.getSource(), );
-                double x2 = e.b.x, y2 = e.b.y;
+                DefaultUndirectedGraph<Integer, DefaultEdge> g1 = biGraph.getG();
+                Point src = biGraph.getLocation(biGraph.getG().getEdgeSource(e));
+                Point dest =  biGraph.getLocation(biGraph.getG().getEdgeTarget(e));
 
-                LineArrow line = new LineArrow(x1, y1, x2, y2, Color.BLACK, 3);
+                graphParts.LineArrow line = new LineArrow(src.x(), src.y(), dest.x(), dest.y(), Color.BLACK, 3);
                 line.draw(g);
             }
         }
