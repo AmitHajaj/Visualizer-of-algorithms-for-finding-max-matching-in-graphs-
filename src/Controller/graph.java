@@ -24,7 +24,8 @@ public class graph {
 //        frame.setWorkingAreaSize(150, 0, 850, 1000);
 
         DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
-        bipartiteGraph graph = new bipartiteGraph(g);
+        bipartiteGraph graph = graph_utils.getRandomBiPartiteGraph(12, 8);;
+
 
         Hungarian_Method algo = new Hungarian_Method(graph);
 

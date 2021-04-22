@@ -18,7 +18,7 @@ import java.util.*;
  * For a given bipartite graph G= (A U B, V) where A and B are the two sides of the graph, we can apply Hungarian_method on it
  * and we will get back the max. matching for this graph G.
  *
- * This version of the Hungarian method runs in O().
+ * This version of the Hungarian method runs in O(??).
  *
  * @author Amit Hajaj, Kfir Ettinger, Shani Shuv
  *
@@ -26,9 +26,7 @@ import java.util.*;
 public class Hungarian_Method {
     bipartiteGraph graph;
 
-    public Hungarian_Method(bipartiteGraph g){
-        this.graph = g;
-    }
+    public Hungarian_Method(bipartiteGraph g){this.graph = g;}
 
     /**
      *This method will apply the Hungarian method for finding a max. matching in bipartite graphs

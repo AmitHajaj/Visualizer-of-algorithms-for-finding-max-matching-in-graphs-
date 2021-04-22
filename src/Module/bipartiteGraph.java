@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This class represent a bipartite graph with a graph object and two sets of vertices.
+ * This simple class represent a bipartite graph with a graph object and two sets of vertices.
+ *
  */
 public class bipartiteGraph {
     private DefaultUndirectedGraph<Integer, DefaultEdge> g;
@@ -16,6 +17,15 @@ public class bipartiteGraph {
 
     public bipartiteGraph(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
         this.g = g;
+        A = new HashSet<Integer>();
+        B = new HashSet<Integer>();
+    }
+
+    /**
+     * Empty constructor.
+     */
+    public bipartiteGraph(){
+        this.g = new DefaultUndirectedGraph<>(DefaultEdge.class);
         A = new HashSet<Integer>();
         B = new HashSet<Integer>();
     }
