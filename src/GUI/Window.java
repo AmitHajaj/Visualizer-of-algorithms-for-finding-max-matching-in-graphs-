@@ -34,7 +34,7 @@ public class Window extends JFrame{
     private static boolean isMenuOpen = false;
     /* pages panels: */
     private final JPanel pages = new JPanel(new CardLayout());
-    private final Main_panel entryPanel = new Main_panel();
+    private final Main_Panel entryPanel = new Main_Panel();
     private final JPanel page2 = new JPanel();
     private final JPanel page3 = new JPanel();
 

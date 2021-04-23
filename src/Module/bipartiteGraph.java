@@ -31,7 +31,8 @@ public class bipartiteGraph {
     }
 
     public void addEdge(int src, int dst){
-        this.graph.addEdge(src,dst);
+        if(graph.containsVertex(src)&&graph.containsVertex(dst))
+            this.graph.addEdge(src,dst);
     }
 
     public Set<DefaultEdge> getEdges(){
