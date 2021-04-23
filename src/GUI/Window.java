@@ -160,8 +160,8 @@ public class Window extends JFrame{
 
         btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/Icons/rightArrow.png")));
         btn_page1.setIcon(new ImageIcon(getClass().getResource("/Icons/hungarianIcon.png")));
-        btn_page2.setIcon(new ImageIcon(getClass().getResource("/Icons/poke2.png")));
-        btn_page3.setIcon(new ImageIcon(getClass().getResource("/Icons/poke3.png")));
+        btn_page2.setIcon(new ImageIcon(getClass().getResource("/Icons/task2.png")));
+        btn_page3.setIcon(new ImageIcon(getClass().getResource("/Icons/task3.png")));
 
         btn_toggleMenu.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {

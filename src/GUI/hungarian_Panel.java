@@ -1,17 +1,15 @@
 package GUI;
 
+import Module.Pair;
+import Module.bipartiteGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
-
-import Module.*;
 
 
 class hungarian_Panel extends JPanel{
@@ -34,6 +32,7 @@ class hungarian_Panel extends JPanel{
 
     }
 
+    // run algorithm
     public void runAlgo() {
         marked.clear();
         /**
@@ -57,10 +56,12 @@ class hungarian_Panel extends JPanel{
         repaint();
     }
 
+    // add edge given src and dest
     public void addEdge(){
         //TODO add implementation
     }
 
+    // add random edge
     public void addRandomEdge() {
         int size = pointsA.size();
         if(size==0) return;
@@ -73,6 +74,7 @@ class hungarian_Panel extends JPanel{
         repaint();
     }
 
+    // build random graph
     public void randomizeGraph() {
         newGraph();
         int size = (int) (Math.random() * 20) + 1;
@@ -85,6 +87,7 @@ class hungarian_Panel extends JPanel{
         }
     }
 
+    // new node
     public void addVertex() {
         int n = pointsA.size();
         this.biGraph.addToA(n*2);
@@ -92,6 +95,7 @@ class hungarian_Panel extends JPanel{
         repaint();
     }
 
+    // reset graph
     public void newGraph() {
         this.biGraph = new bipartiteGraph();
         this.pointsA = biGraph.getA();
@@ -99,10 +103,11 @@ class hungarian_Panel extends JPanel{
         repaint();
     }
 
+    //paint graph
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //draw Nodes:
+
         int n = pointsA.size();
         Iterator<Integer> iterA = pointsA.iterator();
         Iterator<Integer> iterB = pointsB.iterator();
@@ -134,11 +139,15 @@ class hungarian_Panel extends JPanel{
         //draw Edges:
         Set<DefaultEdge> edges = biGraph.getEdges();
         for (DefaultEdge e : edges) {
+
+            // marked edges =>  red, regular edges => black
             Color arrowColor = marked.contains(e)? Color.RED: Color.BLACK;
 
+            // get locations
             Pair src = biGraph.getLocation(biGraph.getG().getEdgeSource(e));
             Pair dest =  biGraph.getLocation(biGraph.getG().getEdgeTarget(e));
 
+            // draw edge
             graphParts.LineArrow line = new graphParts.LineArrow(src.x(), src.y(), dest.x(), dest.y(), arrowColor, 3);
             line.draw(g);
         }
