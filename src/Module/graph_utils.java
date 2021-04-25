@@ -19,7 +19,7 @@ public class graph_utils {
 
     /**
      * returns an empty bipartite graph.
-     * @return
+     * @return empty bipartite graph.
      */
     public static bipartiteGraph getBiPartiteGraph(){
         DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
@@ -31,7 +31,7 @@ public class graph_utils {
          * Generate a random graph with v_size nodes and e_size edges
          * @param v_size number of vertices to add.
          * @param e_size number of edges to add.
-         * @return
+         * @return random bipartite graph
          */
     public static bipartiteGraph getRandomBiPartiteGraph(int v_size, int e_size) {
         DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
@@ -46,7 +46,6 @@ public class graph_utils {
                 bpg.getG().addVertex(i);
             }
         }
-            // Iterator<node_data> itr = V.iterator(); // Iterator is a more elegant and generic way, but KIS is more important
         Set<Integer> nodesA = bpg.getA();
         Set<Integer> nodesB = bpg.getB();
         Random r = new Random();
