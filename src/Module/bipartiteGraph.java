@@ -16,8 +16,7 @@ public class bipartiteGraph {
     HashSet<Integer> A;
     HashSet<Integer> B;
 
-    public bipartiteGraph() {
-        DefaultUndirectedGraph<Integer, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+    public bipartiteGraph(DefaultUndirectedGraph<Integer, DefaultEdge> g) {
         this.graph = g;
         A = new HashSet<Integer>();
         B = new HashSet<Integer>();
@@ -27,7 +26,7 @@ public class bipartiteGraph {
      * Empty constructor.
      */
     public bipartiteGraph(){
-        this.g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        this.graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
         A = new HashSet<Integer>();
         B = new HashSet<Integer>();
     }

@@ -1,7 +1,6 @@
 package GUI;
 
-import Module.Pair;
-import Module.bipartiteGraph;
+import Module.*;
 import org.jgrapht.graph.DefaultEdge;
 
 import javax.swing.*;
@@ -40,18 +39,20 @@ class hungarian_Panel extends JPanel{
          |\/\/\/\ CODE FOR DEMONSTRATION ONLY! \/\/\/|
          |/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/|
          **/
-        int size = pointsA.size(), item, j;
-        Set<DefaultEdge> edges = biGraph.getEdges();
-
-        for(int i = 0; i< (size/2); i++){
-            item = new Random().nextInt(size);
-            j = 0;
-            for (DefaultEdge e : edges) {
-                if (j == item)
-                    marked.add(e);
-                j++;
-            }
-        }
+        Hungarian_Method algo = new Hungarian_Method(biGraph);
+        marked.addAll(algo.Hungarian(biGraph));
+//        int size = pointsA.size(), item, j;
+//        Set<DefaultEdge> edges = biGraph.getEdges();
+//
+//        for(int i = 0; i< (size/2); i++){
+//            item = new Random().nextInt(size);
+//            j = 0;
+//            for (DefaultEdge e : edges) {
+//                if (j == item)
+//                    marked.add(e);
+//                j++;
+//            }
+//        }
 
         repaint();
     }
