@@ -39,8 +39,13 @@ public class Hungarian_Method {
         boolean flag = true;
 
         while(flag){
+
             bSize = M.size();
-            M = this.IsAugmenting(g.getA(), g.getB(), M);
+
+            HashSet<Integer> ACopy = new HashSet<>(g.getA());
+            HashSet<Integer> BCopy = new HashSet<>(g.getB());
+
+            M = this.IsAugmenting(ACopy, BCopy, M);
             aSize = M.size();
             if(aSize == bSize){
                 flag = false;

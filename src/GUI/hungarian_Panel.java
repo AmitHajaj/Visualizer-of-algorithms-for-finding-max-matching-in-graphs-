@@ -16,7 +16,7 @@ class hungarian_Panel extends JPanel{
     private static final long serialVersionUID = 1L;
     // == GRAPH STUFF ==
     bipartiteGraph biGraph;
-    HashSet<DefaultEdge> marked = new HashSet<>();// set of marked edges
+    Set<DefaultEdge> marked = new HashSet<>();// set of marked edges
     private HashSet<Integer> pointsA;
     private HashSet<Integer> pointsB;
 
@@ -34,13 +34,17 @@ class hungarian_Panel extends JPanel{
     // run algorithm
     public void runAlgo() {
         marked.clear();
+
+        Hungarian_Method algo = new Hungarian_Method(biGraph);
+        marked = algo.Hungarian(biGraph);
+
+
         /**
          |/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/|
          |\/\/\/\ CODE FOR DEMONSTRATION ONLY! \/\/\/|
          |/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/|
          **/
-        Hungarian_Method algo = new Hungarian_Method(biGraph);
-        marked.addAll(algo.Hungarian(biGraph));
+
 //        int size = pointsA.size(), item, j;
 //        Set<DefaultEdge> edges = biGraph.getEdges();
 //
@@ -69,7 +73,6 @@ class hungarian_Panel extends JPanel{
 
         int src = (new Random().nextInt(size))*2;
         int dest = (new Random().nextInt(size))*2+1;
-
 
         this.biGraph.addEdge(src,dest);
         repaint();
@@ -138,15 +141,23 @@ class hungarian_Panel extends JPanel{
         }
 
         //draw Edges:
+        // marked edges =>  red, regular edges => black
+
         Set<DefaultEdge> edges = biGraph.getEdges();
         for (DefaultEdge e : edges) {
 
-            // marked edges =>  red, regular edges => black
-            Color arrowColor = marked.contains(e)? Color.RED: Color.BLACK;
+            Color arrowColor = Color.BLACK;
 
-            // get locations
             Pair src = biGraph.getLocation(biGraph.getG().getEdgeSource(e));
             Pair dest =  biGraph.getLocation(biGraph.getG().getEdgeTarget(e));
+            for(DefaultEdge markedE : marked) {
+                Pair markedSrc = biGraph.getLocation(biGraph.getG().getEdgeSource(markedE));
+                Pair markedDest =  biGraph.getLocation(biGraph.getG().getEdgeTarget(markedE));
+                if (src == markedSrc && dest == markedDest)
+                {
+                    arrowColor =Color.RED;
+                }
+            }
 
             // draw edge
             graphParts.LineArrow line = new graphParts.LineArrow(src.x(), src.y(), dest.x(), dest.y(), arrowColor, 3);
