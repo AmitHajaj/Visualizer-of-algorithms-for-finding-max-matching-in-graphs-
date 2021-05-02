@@ -53,7 +53,7 @@ public class Window extends JFrame{
         this.setPreferredSize(new Dimension(900,500));
         this.setLocationByPlatform(true);
         this.setUndecorated(true);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icons/pokeball.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/data/pokeball.png")));
         this.setLayout(new BorderLayout());
         this.addOtherComponents();
         this.pack();
@@ -97,7 +97,7 @@ public class Window extends JFrame{
         closePNL.setLayout(new BorderLayout());
 
         closeWindowBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        closeWindowBTN.setIcon(new ImageIcon(getClass().getResource("/Icons/icons8_close_window_18px.png"))); // NOI18N
+        closeWindowBTN.setIcon(new ImageIcon(getClass().getResource("/data/icons8_close_window_18px.png"))); // NOI18N
         closeWindowBTN.setAlignmentY(0.0F);
         closeWindowBTN.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         closeWindowBTN.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -120,7 +120,7 @@ public class Window extends JFrame{
         maximizePNL.setBackground(color_header);
         maximizePNL.setLayout(new BorderLayout());
         maxWindowBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        maxWindowBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_full_screen_18px.png"))); // NOI18N
+        maxWindowBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/data/icons8_full_screen_18px.png"))); // NOI18N
         maxWindowBTN.setPreferredSize(new Dimension(30, 30));
         maxWindowBTN.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
@@ -158,10 +158,10 @@ public class Window extends JFrame{
         btn_page2.setForeground(color_text_menu);
         btn_page3.setForeground(color_text_menu);
 
-        btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/Icons/rightArrow.png")));
-        btn_page1.setIcon(new ImageIcon(getClass().getResource("/Icons/hungarianIcon.png")));
-        btn_page2.setIcon(new ImageIcon(getClass().getResource("/Icons/task2.png")));
-        btn_page3.setIcon(new ImageIcon(getClass().getResource("/Icons/task3.png")));
+        btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/data/rightArrow.png")));
+        btn_page1.setIcon(new ImageIcon(getClass().getResource("/data/hungarianIcon.png")));
+        btn_page2.setIcon(new ImageIcon(getClass().getResource("/data/task2.png")));
+        btn_page3.setIcon(new ImageIcon(getClass().getResource("/data/task3.png")));
 
         btn_toggleMenu.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
@@ -236,11 +236,11 @@ public class Window extends JFrame{
     protected void toggleMenuClicked() {
         if(isMenuOpen){
             sideBar.setPreferredSize(new Dimension(50 ,getHeight()));
-            btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/Icons/rightArrow.png")));
+            btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/data/rightArrow.png")));
         }
         else{
             sideBar.setPreferredSize(new Dimension(250 ,getHeight()));
-            btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/Icons/leftArrow.png")));
+            btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/data/leftArrow.png")));
         }
         isMenuOpen = !isMenuOpen;
         SwingUtilities.updateComponentTreeUI(this);
