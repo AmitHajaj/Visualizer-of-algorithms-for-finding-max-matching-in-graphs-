@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.Set;
 
 
-class hungarian_Panel extends JPanel{
+class Edmonds_Panel extends JPanel{
 
     private static final long serialVersionUID = 1L;
     // == GRAPH STUFF ==
@@ -20,7 +20,7 @@ class hungarian_Panel extends JPanel{
     private HashSet<Integer> pointsA;
     private HashSet<Integer> pointsB;
 
-    public hungarian_Panel() {
+    public Edmonds_Panel() {
 
         // === INIT GRAPH ===
         newGraph();
@@ -32,6 +32,7 @@ class hungarian_Panel extends JPanel{
     }
 
     // run algorithm
+    //TODO: put here the Edmonds algo.
     public void runAlgo() {
         marked.clear();
 
@@ -63,17 +64,7 @@ class hungarian_Panel extends JPanel{
 
     // add edge given src and dest
     public void addEdge(){
-        //TODO add implementation.
-        String firstVertex = JOptionPane.showInputDialog("Please choose a source vertex: ");
-        String secondVertex = JOptionPane.showInputDialog("Please choose a target vertex: ");
-
-        int first = Integer.parseInt(firstVertex);
-        int second = Integer.parseInt(secondVertex);
-
-        this.biGraph.addEdge(first, second);
-
-        repaint();
-
+        //TODO add implementation
     }
 
     // add random edge
@@ -89,6 +80,7 @@ class hungarian_Panel extends JPanel{
     }
 
     // build random graph
+    //TODO: randomize a generic graph, not bipartite.
     public void randomizeGraph() {
         newGraph();
         int size = (int) (Math.random() * 20) + 1;
