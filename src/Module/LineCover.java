@@ -1,7 +1,7 @@
 import javax.swing.text.MutableAttributeSet;
 import java.util.HashMap;
 
-public class LineCover {
+public class LineCover { //shani's comment
     Graph g;
     Match lc;
     Match gse;
@@ -28,6 +28,7 @@ public class LineCover {
             if(ifReallyCovers(with)){
                 return with;
             }
+
             else return new Match();
         }
 
