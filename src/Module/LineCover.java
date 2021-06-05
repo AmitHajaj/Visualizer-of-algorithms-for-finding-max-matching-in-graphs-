@@ -1,7 +1,7 @@
 import javax.swing.text.MutableAttributeSet;
 import java.util.HashMap;
 
-public class LineCover {
+public class LineCover { // kfir's comment
     Graph g;
     Match lc;
     Match gse;
