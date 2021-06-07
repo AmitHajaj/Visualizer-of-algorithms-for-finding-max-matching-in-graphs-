@@ -36,8 +36,7 @@ class hungarian_Panel extends JPanel{
     public void runAlgo() {
         marked.clear();
 
-        Hungarian algo = new Hungarian(biGraph);
-        marked = algo.Hungarian(biGraph);
+        marked = Hungarian.runAlgo(biGraph);
 
 
         /**

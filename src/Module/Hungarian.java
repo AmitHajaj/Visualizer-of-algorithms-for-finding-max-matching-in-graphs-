@@ -22,19 +22,16 @@ import java.util.Set;
  *
  */
 public class Hungarian{
-    bipartiteGraph graph;
-
-    public Hungarian(bipartiteGraph g){this.graph = g;}
+    private static bipartiteGraph _graph;
 
     /**
      *This method will apply the Hungarian method for finding a max. matching in bipartite graphs
      * @param g - bipartite graph.
      * @return A Set of edges that would be the max. matching in this graph.
      */
-    public Set<DefaultEdge> Hungarian(bipartiteGraph g){
+    public static Set<DefaultEdge> runAlgo(bipartiteGraph g){
         Set<DefaultEdge> M = new HashSet<>();
-        int bSize = 0;
-        int aSize = 0;
+        int bSize, aSize;
 
         boolean flag = true;
 
@@ -45,7 +42,7 @@ public class Hungarian{
             HashSet<Integer> ACopy = new HashSet<>(g.getA());
             HashSet<Integer> BCopy = new HashSet<>(g.getB());
 
-            M = this.IsAugmenting(ACopy, BCopy, M);
+            M = IsAugmenting(ACopy, BCopy, M);
             //TODO check M for null
             aSize = M.size();
             if(aSize == bSize){
@@ -63,7 +60,7 @@ public class Hungarian{
      @param M - a match on this graph
      @return An augmenting path for match M if there is one, or M itself if there isnt.
      */
-    public Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Set<DefaultEdge> M){
+    public static Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Set<DefaultEdge> M){
         Set<Integer> A1 = new HashSet<Integer>();
         Set<Integer> A2 = A;
         Set<Integer> B1 = new HashSet<Integer>();
@@ -74,8 +71,8 @@ public class Hungarian{
         int tempDst;
 
         for(DefaultEdge e: M){
-            tempSrc =this.graph.getG().getEdgeSource(e);
-            tempDst =this.graph.getG().getEdgeTarget(e);
+            tempSrc = _graph.getG().getEdgeSource(e);
+            tempDst = _graph.getG().getEdgeTarget(e);
 
             if(A.contains(tempSrc)) {
                 A1.add(tempSrc);
@@ -102,9 +99,9 @@ public class Hungarian{
         HashSet<DefaultEdge> A2ToB1 = new HashSet<DefaultEdge>();//Group #3, like group #2 but in the opposite direction.
         HashSet<DefaultEdge> A2ToB2 = new HashSet<DefaultEdge>();//Group #4, edges that none of the nodes is in the current matching.
 
-        for(DefaultEdge e:this.graph.getG().edgeSet()){
-            tempSrc =this.graph.getG().getEdgeSource(e);
-            tempDst =this.graph.getG().getEdgeTarget(e);
+        for(DefaultEdge e : _graph.getG().edgeSet()){
+            tempSrc = _graph.getG().getEdgeSource(e);
+            tempDst = _graph.getG().getEdgeTarget(e);
             if(A1.contains(tempSrc)){
                 if(B1.contains(tempDst) && !M.contains(e)){
                     A1ToB1.add(e);
@@ -129,17 +126,17 @@ public class Hungarian{
 
         Graph<Integer, DefaultEdge> Dg = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-        for(int i: this.graph.getG().vertexSet()){
+        for(int i: _graph.getG().vertexSet()){
             Dg.addVertex(i);
         }
 
-        for(DefaultEdge e:this.graph.getG().edgeSet()){
-            tempSrc =this.graph.getG().getEdgeSource(e);
-            tempDst =this.graph.getG().getEdgeTarget(e);
+        for(DefaultEdge e : _graph.getG().edgeSet()){
+            tempSrc = _graph.getG().getEdgeSource(e);
+            tempDst = _graph.getG().getEdgeTarget(e);
 
             Dg.addEdge(tempSrc, tempDst);
             for(DefaultEdge edge: M){
-                if(this.graph.getG().getEdgeSource(edge) == tempSrc && this.graph.getG().getEdgeTarget(edge) == tempDst){
+                if(_graph.getG().getEdgeSource(edge) == tempSrc && _graph.getG().getEdgeTarget(edge) == tempDst){
                     Dg.addEdge(tempDst, tempSrc);
                     Dg.removeEdge(tempSrc, tempDst);
                 }
@@ -187,8 +184,8 @@ public class Hungarian{
                 Iterator<DefaultEdge> itr = M.iterator();
                 while(itr.hasNext()){
                     tempRemove = itr.next();
-                    if(this.graph.getG().getEdgeTarget(temp) == this.graph.getG().getEdgeSource(tempRemove) &&
-                            this.graph.getG().getEdgeSource(temp) ==this.graph.getG().getEdgeTarget(tempRemove)){
+                    if(_graph.getG().getEdgeTarget(temp) == _graph.getG().getEdgeSource(tempRemove) &&
+                            _graph.getG().getEdgeSource(temp) == _graph.getG().getEdgeTarget(tempRemove)){
                         itr.remove();
                     }
                 }
