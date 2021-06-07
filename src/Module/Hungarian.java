@@ -21,10 +21,10 @@ import java.util.Set;
  * @author Amit Hajaj, Kfir Ettinger, Shani Shuv
  *
  */
-public class Hungarian_Method {
+public class Hungarian{
     bipartiteGraph graph;
 
-    public Hungarian_Method(bipartiteGraph g){this.graph = g;}
+    public Hungarian(bipartiteGraph g){this.graph = g;}
 
     /**
      *This method will apply the Hungarian method for finding a max. matching in bipartite graphs
@@ -46,6 +46,7 @@ public class Hungarian_Method {
             HashSet<Integer> BCopy = new HashSet<>(g.getB());
 
             M = this.IsAugmenting(ACopy, BCopy, M);
+            //TODO check M for null
             aSize = M.size();
             if(aSize == bSize){
                 flag = false;

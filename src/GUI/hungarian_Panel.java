@@ -2,6 +2,7 @@ package GUI;
 
 import Module.*;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,9 +34,30 @@ class hungarian_Panel extends JPanel{
 
     // run algorithm
     public void runAlgo() {
+        SimpleGraph<Integer, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);
+        
+        for(int i = 0; i<9; i++)
+            g.addVertex(i+1);
+        
+        g.addEdge(1,2);
+        g.addEdge(1,4);
+        g.addEdge(2,5);
+        g.addEdge(2,3);
+        g.addEdge(3,6);
+        g.addEdge(4,5);
+        g.addEdge(4,7);
+        g.addEdge(5,8);
+        g.addEdge(5,6);
+        g.addEdge(6,9);
+        g.addEdge(7,8);
+        g.addEdge(8,9);
+
+
+        LineCoverAlgorithm.runAlgo(g);
+
         marked.clear();
 
-        Hungarian_Method algo = new Hungarian_Method(biGraph);
+        Hungarian algo = new Hungarian(biGraph);
         marked = algo.Hungarian(biGraph);
 
 
