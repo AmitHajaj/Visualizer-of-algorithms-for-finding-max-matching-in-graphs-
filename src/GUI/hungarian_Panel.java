@@ -26,7 +26,8 @@ class hungarian_Panel extends JPanel{
     Point pointEnd= null;
     private double vertexClickRadius;
     int startKey=-1, endKey=-1;
-    boolean setNode = false;
+    boolean setEdge = false;
+    boolean notValid = false;
 
     public hungarian_Panel() {
 
@@ -39,7 +40,7 @@ class hungarian_Panel extends JPanel{
 
         addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                if(setNode){
+                if(setEdge){
                     pointStart = getClosestVertex(e.getPoint());
 
                     if (pointStart != null)
@@ -48,18 +49,24 @@ class hungarian_Panel extends JPanel{
             }
 
             public void mouseReleased(MouseEvent e) {
-                if(setNode){
+                if(setEdge){
                     pointEnd = getClosestVertex(e.getPoint());
                     if (pointEnd != null)
                         endKey = vertices_locations.get(pointEnd);
 
-                    setEdge();
+                    if(pointsA.contains(startKey) && pointsA.contains(endKey)
+                            || pointsB.contains(startKey) && pointsB.contains(endKey)){
+                        notValid = true;
+                    }
+                    else{
+                        setEdge();
+                    }
                     repaint();
 
                     pointStart = null;
                     endKey= -1;
                     startKey =-1;
-                    setNode = false;
+//                    setEdge = false;
                 }
             }
         });
@@ -69,7 +76,7 @@ class hungarian_Panel extends JPanel{
             }
 
             public void mouseDragged(MouseEvent e) {
-                if(setNode) {
+                if(setEdge) {
                     pointEnd = e.getPoint();
                     repaint();
                 }
@@ -89,6 +96,7 @@ class hungarian_Panel extends JPanel{
 
     // run algorithm
     public void runAlgo() {
+        setEdge = false;
         marked.clear();
 
         marked = Hungarian.runAlgo(biGraph);
@@ -98,7 +106,7 @@ class hungarian_Panel extends JPanel{
 
     // add edge given src and dest
     public void addEdge(){
-        setNode = true;
+        setEdge = true;
         repaint();
     }
 
@@ -109,6 +117,7 @@ class hungarian_Panel extends JPanel{
 
     // add random edge
     public void addRandomEdge() {
+        setEdge = false;
         marked.clear();
         int size = pointsA.size();
         if(size==0) return;
@@ -122,6 +131,7 @@ class hungarian_Panel extends JPanel{
 
     // build random graph
     public void randomizeGraph() {
+        setEdge = false;
         newGraph();
         marked.clear();
         int size = (int) (Math.random() * 20) + 1;
@@ -136,6 +146,7 @@ class hungarian_Panel extends JPanel{
 
     // new node
     public void addVertex() {
+        setEdge = false;
 
         int n = pointsA.size();
         this.biGraph.addToA(n*2);
@@ -145,6 +156,7 @@ class hungarian_Panel extends JPanel{
 
     // reset graph
     public void newGraph() {
+        setEdge = false;
         marked.clear();
         this.biGraph = new bipartiteGraph();
         this.pointsA = biGraph.getA();
@@ -184,14 +196,14 @@ class hungarian_Panel extends JPanel{
             Color drawingColor = new Color(0xCE7474);
             //draw vertex
 
-            if(!setNode || a_Point == startKey)
+            if(!setEdge || a_Point == startKey)
                 g.setColor(Color.RED);
             else
                 g.setColor(drawingColor);
 
             g.fillOval(x_a-5, y-5, 10, 10);
 
-            if(!setNode || b_Point == startKey)
+            if(!setEdge || b_Point == startKey)
                 g.setColor(Color.RED);
             else
                 g.setColor(drawingColor);
@@ -230,6 +242,12 @@ class hungarian_Panel extends JPanel{
             // draw edge
             graphParts.LineArrow line = new graphParts.LineArrow(src.x(), src.y(), dest.x(), dest.y(), arrowColor, 3);
             line.draw(g);
+        }
+        if(notValid){
+            g.setColor(Color.black);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g.drawString("Edges only from left to right or from right to left!", (int)this.getBounds().getX(), (int)this.getBounds().getY());
+            notValid = false;
         }
     }
 }
