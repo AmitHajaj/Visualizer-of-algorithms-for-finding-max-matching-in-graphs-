@@ -69,7 +69,7 @@ class Edmonds_Panel extends JPanel{
                     pointStart = null;
                     endKey= -1;
                     startKey =-1;
-                    setEdge = false;
+//                    setEdge = false;
                 }
                 else if(setNode){
                     setNode();
@@ -102,6 +102,7 @@ class Edmonds_Panel extends JPanel{
 
     // run algorithm
     public void runAlgo() {
+        setEdge = false;
         setNode = false;
         marked.clear();
         _graph.removeVertex(0);
@@ -125,6 +126,7 @@ class Edmonds_Panel extends JPanel{
 
     // add random edge
     public void addRandomEdge() {
+        setEdge = false;
         setNode = false;
         marked.clear();
 
@@ -156,6 +158,7 @@ class Edmonds_Panel extends JPanel{
 
     // build random graph
     public void randomizeGraph() {
+        setEdge = false;
         setNode = false;
         newGraph();
         marked.clear();
@@ -186,6 +189,7 @@ class Edmonds_Panel extends JPanel{
 
     // new node
     public void newNode() {
+        setEdge = false;
         setNode = true;
         repaint();
     }
@@ -197,6 +201,7 @@ class Edmonds_Panel extends JPanel{
 
     // reset graph
     public void newGraph(){
+        setEdge = false;
         setNode = false;
         marked.clear();
         vertices_locations.clear();
