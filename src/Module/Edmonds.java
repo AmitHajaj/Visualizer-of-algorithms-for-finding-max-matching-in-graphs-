@@ -256,32 +256,32 @@ public class Edmonds {
      * return a contracted graph for a given blossom.
      *
      * @param g The graph.
-     * @param blossom The blossom.
+     * @param B The blossom.
      * @return The contraction g
      */
-    private static SimpleGraph<Integer, DefaultEdge> contractGraph(SimpleGraph<Integer, DefaultEdge> g, Blossom blossom) {
+    private static SimpleGraph<Integer, DefaultEdge> contractGraph(SimpleGraph<Integer, DefaultEdge> g, Blossom B) {
         SimpleGraph<Integer, DefaultEdge> result = new SimpleGraph<>(DefaultEdge.class);
 
         // Add all nodes that are not in the blossom.
         for (int node: g.vertexSet()) {
-            if (!blossom.nodes.contains(node))
+            if (!B.nodes.contains(node))
                 result.addVertex(node);
         }
 
         // Add the super vertex to the graph.
-        result.addVertex(blossom.stem);
+        result.addVertex(B.stem);
 
         // Add edges not around the blossom.
         for (int node: g.vertexSet()){
             //Skip blossom nodes.
-            if (blossom.nodes.contains(node))
+            if (B.nodes.contains(node))
                 continue;
 
            //explore all the neighbor of this node.
             for (int endPoint : edgesFrom(node, g)) {
                 // Adjust edge to the super vertex
-                if (blossom.nodes.contains(endPoint))
-                    endPoint = blossom.stem;
+                if (B.nodes.contains(endPoint))
+                    endPoint = B.stem;
 
                 result.addEdge(node, endPoint);
             }
@@ -292,7 +292,6 @@ public class Edmonds {
 
     /**
      * Set the proper path based on a blossom and a graph.
-     *
      *
      * @param path The path in the contracted graph.
      * @param g The original graph.
@@ -317,6 +316,7 @@ public class Edmonds {
             if (path.get(i) != blossom.stem) {
                 result.add(path.get(i));
             }
+            // Handle the blossom.
             else {
                 // Add the blossom stem to the path. it will be there.
                 result.add(blossom.stem);
@@ -341,8 +341,7 @@ public class Edmonds {
 
     /**
      * Reverse a given path.
-     *
-     * @param path The path.
+     * @param path The path we want to reverse.
      * @return The reverse of that path.
      */
     private static List<Integer> reversePath(List<Integer> path) {
@@ -355,21 +354,20 @@ public class Edmonds {
     }
 
     /**
-     * Find a node on the blossom that go to the give node.
+     * Find a node on the blossom that go to the given node.
      *
      * @param g The graph.
-     * @param blossom The blossom.
+     * @param B The blossom.
      * @param node The node outside.
-     * @return Some node in the blossom.
+     * @return Some node on the blossom.
      */
-        private static int findNodeLeavingCycle(SimpleGraph<Integer, DefaultEdge> g, Blossom blossom, int node) {
-        // Check the blossom nodes for match.
-        for (int cycleNode: blossom.nodes)
+        private static int findNodeLeavingCycle(SimpleGraph<Integer, DefaultEdge> g, Blossom B, int node) {
+            // Check the blossom nodes for match.
+            for (int cycleNode: B.nodes)
+                if (g.getEdge(cycleNode, node) != null)
+                    return cycleNode;
 
-            if (g.getEdge(cycleNode, node) != null)
-                return cycleNode;
-
-        return -1;
+            return -1;
     }
 
     /**
