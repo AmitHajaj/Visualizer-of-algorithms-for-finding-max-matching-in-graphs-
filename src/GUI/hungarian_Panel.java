@@ -10,13 +10,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.io.Serial;
 import java.util.*;
 
 
 class hungarian_Panel extends JPanel{
 
-    @Serial
     private static final long serialVersionUID = 1L;
     // == GRAPH STUFF ==
     bipartiteGraph biGraph;
