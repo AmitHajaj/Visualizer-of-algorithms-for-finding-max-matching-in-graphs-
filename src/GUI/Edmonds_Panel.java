@@ -27,9 +27,11 @@ class Edmonds_Panel extends JPanel{
     private HashMap<Point, Integer> vertices_locations = new HashMap<>();
     Point pointStart = null;
     Point pointEnd= null;
+    Point dropPoint= null;
     static
     private double vertexClickRadius;
     int startKey=-1, endKey=-1;
+    boolean setEdge = false;
     boolean setNode = false;
 
     public Edmonds_Panel() {
@@ -44,16 +46,19 @@ class Edmonds_Panel extends JPanel{
 
         addMouseListener( new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                if(setNode){
+                if(setEdge){
                     pointStart = getClosestVertex(e.getPoint());
 
                     if (pointStart != null)
                         startKey = vertices_locations.get(pointStart);
                 }
+                else if(setNode){
+                    dropPoint = e.getPoint();
+                }
             }
 
             public void mouseReleased(MouseEvent e) {
-                if(setNode){
+                if(setEdge){
                     pointEnd = getClosestVertex(e.getPoint());
                     if (pointEnd != null)
                         endKey = vertices_locations.get(pointEnd);
@@ -64,6 +69,12 @@ class Edmonds_Panel extends JPanel{
                     pointStart = null;
                     endKey= -1;
                     startKey =-1;
+                    setEdge = false;
+                }
+                else if(setNode){
+                    setNode();
+                    repaint();
+                    dropPoint = null;
                     setNode = false;
                 }
             }
@@ -72,7 +83,7 @@ class Edmonds_Panel extends JPanel{
             public void mouseMoved(MouseEvent e) {}
 
             public void mouseDragged(MouseEvent e) {
-                if(setNode) {
+                if(setEdge) {
                     pointEnd = e.getPoint();
                     repaint();
                 }
@@ -93,15 +104,15 @@ class Edmonds_Panel extends JPanel{
     public void runAlgo() {
         marked.clear();
         _graph.removeVertex(0);
-
-        marked = Edmonds.findMaximumMatching(_graph).edgeSet();
+        Set<DefaultEdge> match = Edmonds.findMaximumMatching(_graph).edgeSet();
+        marked.addAll(match);
 
         repaint();
     }
 
     // add edge given src and dest
     public void addEdge(){
-        setNode = true;
+        setEdge = true;
         repaint();
     }
 
@@ -171,13 +182,20 @@ class Edmonds_Panel extends JPanel{
 
     // new node
     public void newNode() {
-        _graph.addVertex(++key);
+        setNode = true;
         repaint();
+    }
+    public void setNode(){
+        _graph.addVertex(++key);
+        vertices_locations.put(dropPoint, key);
+        Rvertices_locations.put(key, dropPoint);
     }
 
     // reset graph
-    public void newGraph() {
+    public void newGraph(){
         marked.clear();
+        vertices_locations.clear();
+        Rvertices_locations.clear();
         this._graph = new SimpleGraph<>(DefaultEdge.class);
 
         repaint();
@@ -195,8 +213,8 @@ class Edmonds_Panel extends JPanel{
         Set<Integer> nodes = _graph.vertexSet();
         Iterator<Integer> itr = nodes.iterator();
 
-        vertices_locations.clear();
-        Rvertices_locations.clear();
+//        vertices_locations.clear();
+//        Rvertices_locations.clear();
 
         // draw vertex
         vertexClickRadius = nodes.size()>1? Math.min((this.getHeight()-20)/(nodes.size()+1)*(2)-(this.getHeight()-20)/(nodes.size()+1), 20): 20;
@@ -207,19 +225,19 @@ class Edmonds_Panel extends JPanel{
             Color drawingColor = new Color(0xCE7474);
 
             //draw vertex
-            if(!setNode || vertex == startKey)
+            if((!setEdge && !setNode)|| vertex == startKey)
                 g.setColor(Color.RED);
             else
                 g.setColor(drawingColor);
 
-            Point point = locateInCircle(i);
-
+//            Point point = locateInCircle(i);
+            Point point = Rvertices_locations.get(vertex);
             g.fillOval(point.x, point.y, 10, 10);
 
 
-            // save nodes locations
-            vertices_locations.put(point, vertex);
-            Rvertices_locations.put(vertex, point);
+//            // save nodes locations
+//            vertices_locations.put(point, vertex);
+//            Rvertices_locations.put(vertex, point);
 
             // draw vertex key
             g.setColor(Color.BLUE);
@@ -237,10 +255,10 @@ class Edmonds_Panel extends JPanel{
             Point dest = Rvertices_locations.get(_graph.getEdgeTarget(e));
 
             for(DefaultEdge markedE : marked) {
-                Point markedSrc = Rvertices_locations.get(_graph.getEdgeSource(e));
-                Point markedDest = Rvertices_locations.get(_graph.getEdgeTarget(e));
+//                Point markedSrc = Rvertices_locations.get(_graph.getEdgeSource(e));
+//                Point markedDest = Rvertices_locations.get(_graph.getEdgeTarget(e));
 
-                if (src == markedSrc && dest == markedDest)
+                if (/*src == markedSrc && dest == markedDest*/ edgesEqual(markedE, e, _graph))
                 {
                     arrowColor =Color.RED;
                 }
@@ -250,5 +268,25 @@ class Edmonds_Panel extends JPanel{
             graphParts.LineArrow line = new graphParts.LineArrow(src.x, src.y, dest.x, dest.y, arrowColor, 3);
             line.draw(g);
         }
+    }
+
+    private boolean edgesEqual(DefaultEdge first, DefaultEdge second, SimpleGraph<Integer, DefaultEdge> g){
+        int firstSrc = g.getEdgeSource(first);
+        int firstDst = g.getEdgeTarget(first);
+        int secondSrc = g.getEdgeSource(second);
+        int secondDst = g.getEdgeTarget(second);
+
+        boolean result = false;
+        if(firstSrc == secondSrc){
+            if(firstDst == secondDst){
+                result = true;
+            }
+        }
+        else if(firstSrc == secondDst){
+            if(firstDst == secondSrc){
+                result = true;
+            }
+        }
+        return result;
     }
 }
