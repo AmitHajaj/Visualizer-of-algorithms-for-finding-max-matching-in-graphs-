@@ -20,6 +20,7 @@ class Edmonds_Panel extends JPanel{
     private static final long serialVersionUID = 1L;
     // == GRAPH STUFF ==
     SimpleGraph<Integer, DefaultEdge> _graph;
+    static int key = 1;
     Set<DefaultEdge> marked = new HashSet<>();// set of marked edges
 
     private HashMap<Integer, Point> Rvertices_locations = new HashMap<>();
@@ -170,14 +171,14 @@ class Edmonds_Panel extends JPanel{
 
     // new node
     public void newNode() {
-        _graph.addVertex();
+        _graph.addVertex(++key);
         repaint();
     }
 
     // reset graph
     public void newGraph() {
         marked.clear();
-        this._graph  = new SimpleGraph<>(DefaultEdge.class);
+        this._graph = new SimpleGraph<>(DefaultEdge.class);
 
         repaint();
     }
