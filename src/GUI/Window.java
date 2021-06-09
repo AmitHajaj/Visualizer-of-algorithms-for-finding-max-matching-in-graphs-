@@ -34,9 +34,9 @@ public class Window extends JFrame{
     private static boolean isMenuOpen = false;
     /* pages panels: */
     private final JPanel pages = new JPanel(new CardLayout());
-    private final Main_Panel entryPanel = new Main_Panel();
-    private final JPanel page2 = new JPanel();
-    private final JPanel page3 = new JPanel();
+    private final Hungarian_FramePanel framePanel1 = new Hungarian_FramePanel();
+    private final Edmonds_FramePanel framePanel2 = new Edmonds_FramePanel();
+    private final JPanel framePanel3 = new JPanel();
 
     //----------------------------------------------------------
     //                          INIT
@@ -160,7 +160,7 @@ public class Window extends JFrame{
 
         btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/data/rightArrow.png")));
         btn_page1.setIcon(new ImageIcon(getClass().getResource("/data/hungarianIcon.png")));
-        btn_page2.setIcon(new ImageIcon(getClass().getResource("/data/task2.png")));
+        btn_page2.setIcon(new ImageIcon(getClass().getResource("/data/EdmondsIcon.png")));
         btn_page3.setIcon(new ImageIcon(getClass().getResource("/data/task3.png")));
 
         btn_toggleMenu.addMouseListener(new MouseAdapter(){
@@ -176,7 +176,7 @@ public class Window extends JFrame{
         });
         btn_page1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
-                switchPage("page1");
+                switchPage("hungarian");
             }
             public void mouseEntered(MouseEvent evt) {
                 btn_page1.setBackground(color_hoverHeader);
@@ -187,7 +187,7 @@ public class Window extends JFrame{
         });
         btn_page2.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
-                switchPage("page2");
+                switchPage("edmonds");
             }
             public void mouseEntered(MouseEvent evt) {
                 btn_page2.setBackground(color_hoverHeader);
@@ -198,7 +198,7 @@ public class Window extends JFrame{
         });
         btn_page3.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {
-                switchPage("page3");
+                switchPage("line cover");
             }
             public void mouseEntered(MouseEvent evt) {
                 btn_page3.setBackground(color_hoverHeader);
@@ -221,15 +221,14 @@ public class Window extends JFrame{
         //----------------------------------------------------------
         //                      PAGES
         //----------------------------------------------------------
-        entryPanel.setName("page1");
-        page2.setName("page2");
-        page2.setBackground(Color.RED);
-        page3.setName("page3");
-        page3.setBackground(Color.GREEN);
+        framePanel1.setName("hungarian");
+        framePanel2.setName("edmonds");
+        framePanel3.setName("line cover");
 
-        pages.add(entryPanel, "page1");
-        pages.add(page2, "page2");
-        pages.add(page3, "page3");
+
+        pages.add(framePanel1, "hungarian");
+        pages.add(framePanel2, "edmonds");
+        pages.add(framePanel3, "line cover");
         getContentPane().add(pages, BorderLayout.CENTER);
     }
 
@@ -267,54 +266,4 @@ public class Window extends JFrame{
         ComponentResizer cr = new ComponentResizer();
         cr.registerComponent(this);
     }
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//        String actionCommand = e.getActionCommand();
-//        Set<DefaultEdge> M = new HashSet<DefaultEdge>();
-//
-//        // TODO use proxy graph?
-//        switch(actionCommand){
-//            case "Add vertex":
-//                // Even vertices go to A. Odd vertices go to B.
-//                if(numOfNodes%2 == 0){
-//                    this.graph.addToA(numOfNodes);
-//                }
-//                else{
-//                    this.graph.addToB(numOfNodes);
-//                }
-//                this.graph.getG().addVertex(numOfNodes++);
-//                workingArea.drawNode(numOfNodes,this.workingArea.getGraphics());
-//                break;
-//            case "Remove vertex":
-//                // TODO: Add here a dialog box to get from the user the vertex to remove.
-//                if(this.graph.getA().contains(0)){
-//                    this.graph.removeFromA(0);
-//                }
-//                else{
-//                    this.graph.removeFromB(0);
-//                }
-//                this.graph.getG().removeVertex(0);
-//                numOfNodes--;
-//                break;
-//            case "Connect":
-//                // TODO:  Add here a dialog box to get from the user the vertices to connect.
-//                this.graph.getG().addEdge(0, 1);
-//                break;
-//            case "Disconnect":
-//                // TODO:  Add here a dialog box to get from the user the vertices to connect.
-//                this.graph.getG().removeEdge(1, 0);
-//                break;
-//            case "Find max. match":
-//                // TODO: call the Hungarian on the current graph.
-//                M = algo.Hungarian(this.graph);
-//                break;
-//            case "Clean board":
-////                this.graph.removeAllVertices();
-////                this.graph.removeAllEdges();
-//                break;
-//        }
-//
-//        // TODO re-draw
-//    }
 }

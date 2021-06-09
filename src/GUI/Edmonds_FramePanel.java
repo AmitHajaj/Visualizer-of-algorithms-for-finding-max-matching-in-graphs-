@@ -1,25 +1,15 @@
 package GUI;
 
-import Module.bipartiteGraph;
-import org.jgrapht.graph.DefaultEdge;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
 
 
-public class Main_Panel extends JPanel implements ActionListener{
-    private static final long serialVersionUID = 1L;
-
-    // == GRAPH STUFF ==
-    bipartiteGraph biGraph;
-    HashSet<DefaultEdge> marked = new HashSet<>();// set of marked edges
-    private HashSet<Integer> pointsA;
-    private HashSet<Integer> pointsB;
+public class Edmonds_FramePanel extends JPanel implements ActionListener{
+//    private static final long serialVersionUID = 1L;
 
     //  === BUTTONS ===
     JButton runAlgoButton;
@@ -32,23 +22,24 @@ public class Main_Panel extends JPanel implements ActionListener{
     // === PANELS ===
     JPanel buttonsPanel;
     JPanel topMenu;
-    hungarian_Panel task1;
+    Edmonds_Panel edmondsPanel =  new Edmonds_Panel();
 
     // buttons text
     final String runAlg = "-Run algorithm-", rndEdge = "New random edge",
-                 newNodes = "New 2 Nodes", clear = "Clear",
-                 randomGraph = "Randomize a graph", normalEdge = "New edge";
+            newNodes = "New Node", clear = "Clear",
+            randomGraph = "Randomize a graph", normalEdge = "New edge";
 
     JTabbedPane panes = new JTabbedPane();
 
     // |+++++++++++++++++++++++|
     // |+++++ CONSTRUCTOR +++++|
     // |+++++++++++++++++++++++|
-    public Main_Panel(){
+
+    public Edmonds_FramePanel(){
         //    === SET PANELS ===
         buttonsPanel = new JPanel();
         topMenu = new JPanel();
-        task1 = new hungarian_Panel();
+        edmondsPanel = new Edmonds_Panel();
 
         //    ==== SET BUTTONS TO BOTTOM PANEL ====
         runAlgoButton = new JButton(runAlg);
@@ -91,11 +82,11 @@ public class Main_Panel extends JPanel implements ActionListener{
         }
         JScrollPane jScrollPane = new JScrollPane(jEditorPane);
 
-        panes.add("Algorithm", task1);
+        panes.add("Algorithm", edmondsPanel);
         panes.add("Explanation", jScrollPane);
         buttonsPanel.setBackground(Color.DARK_GRAY);
 
-        task1.add(buttonsPanel, BorderLayout.SOUTH);
+        edmondsPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.add(panes);
     }
@@ -107,22 +98,22 @@ public class Main_Panel extends JPanel implements ActionListener{
         String actionCommand = e.getActionCommand();
         switch(actionCommand){
             case runAlg:
-                task1.runAlgo();
+                edmondsPanel.runAlgo();
                 break;
             case rndEdge:
-                task1.addRandomEdge();
+                edmondsPanel.addRandomEdge();
                 break;
             case normalEdge:
-                task1.addEdge();
+                edmondsPanel.addEdge();
                 break;
             case newNodes:
-                task1.addVertex();
+                edmondsPanel.newNode();
                 break;
             case clear:
-                task1.newGraph();
+                edmondsPanel.newGraph();
                 break;
             case randomGraph:
-                task1.randomizeGraph();
+                edmondsPanel.randomizeGraph();
                 break;
         }
     }
