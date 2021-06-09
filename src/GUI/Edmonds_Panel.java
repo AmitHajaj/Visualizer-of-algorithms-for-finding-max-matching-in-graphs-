@@ -75,7 +75,7 @@ class Edmonds_Panel extends JPanel{
                     setNode();
                     repaint();
                     dropPoint = null;
-                    setNode = false;
+//                    setNode = false;
                 }
             }
         });
@@ -102,6 +102,7 @@ class Edmonds_Panel extends JPanel{
 
     // run algorithm
     public void runAlgo() {
+        setNode = false;
         marked.clear();
         _graph.removeVertex(0);
         Set<DefaultEdge> match = Edmonds.findMaximumMatching(_graph).edgeSet();
@@ -112,6 +113,7 @@ class Edmonds_Panel extends JPanel{
 
     // add edge given src and dest
     public void addEdge(){
+        setNode = false;
         setEdge = true;
         repaint();
     }
@@ -123,6 +125,7 @@ class Edmonds_Panel extends JPanel{
 
     // add random edge
     public void addRandomEdge() {
+        setNode = false;
         marked.clear();
 
         Set<Integer> nodes = _graph.vertexSet();
@@ -153,6 +156,7 @@ class Edmonds_Panel extends JPanel{
 
     // build random graph
     public void randomizeGraph() {
+        setNode = false;
         newGraph();
         marked.clear();
         int size = (int) (Math.random() * 20) + 1;
@@ -193,6 +197,7 @@ class Edmonds_Panel extends JPanel{
 
     // reset graph
     public void newGraph(){
+        setNode = false;
         marked.clear();
         vertices_locations.clear();
         Rvertices_locations.clear();
