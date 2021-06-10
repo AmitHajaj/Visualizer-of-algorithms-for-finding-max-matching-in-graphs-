@@ -1,6 +1,5 @@
 package GUI;
 
-
 import Module.LineCoverAlgorithm;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
@@ -120,9 +119,9 @@ public class LineCover_Panel  extends JPanel {
         marked.clear();
         Set<Integer> nodes = _graph.vertexSet();
         int size = nodes.size(),  i = 0, next, src = -1, dest = 0;
-        if(size<2){
-            return;
-        }
+
+        if(size<2){return;}
+
         int srcRand  = (new Random().nextInt(size));
         int destRand  = (new Random().nextInt(size-1));
         if (srcRand == destRand)
@@ -130,12 +129,10 @@ public class LineCover_Panel  extends JPanel {
 
         for(Iterator<Integer> itr = nodes.iterator(); itr.hasNext(); i++){
             next = itr.next();
-            if (i == srcRand) {
+            if (i == srcRand)
                 src = next;
-            }
-            else if( i == destRand){
+            else if( i == destRand)
                 dest = next;
-            }
         }
         this._graph.addEdge(src,dest);
         repaint();
