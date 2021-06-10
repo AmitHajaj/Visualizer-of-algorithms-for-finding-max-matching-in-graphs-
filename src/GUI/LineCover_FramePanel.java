@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
+import Module.LineCoverAlgorithm;
 
 
-public class Edmonds_FramePanel extends JPanel implements ActionListener{
-
+public class LineCover_FramePanel extends JPanel implements ActionListener{
 
     //  === BUTTONS ===
     JButton runAlgoButton;
@@ -22,12 +22,12 @@ public class Edmonds_FramePanel extends JPanel implements ActionListener{
     // === PANELS ===
     JPanel buttonsPanel;
     JPanel topMenu;
-    Edmonds_Panel edmondsPanel;
+    LineCover_Panel LineCover_panel;
 
     // buttons text
-    final String runAlg = "-Run algorithm-", rndEdge = "Random Edge",
-            newNodes = "Node", clear = "Clear",
-            randomGraph = "Random Graph", normalEdge = "Edge";
+    final String runAlg = "-Run algorithm-", rndEdge = "New random edge",
+            newNodes = "New Node", clear = "Clear",
+            randomGraph = "Randomize a graph", normalEdge = "New edge";
 
     JTabbedPane panes = new JTabbedPane();
 
@@ -35,11 +35,11 @@ public class Edmonds_FramePanel extends JPanel implements ActionListener{
     // |+++++ CONSTRUCTOR +++++|
     // |+++++++++++++++++++++++|
 
-    public Edmonds_FramePanel(){
+    public LineCover_FramePanel(){
         //    === SET PANELS ===
         buttonsPanel = new JPanel();
         topMenu = new JPanel();
-        edmondsPanel = new Edmonds_Panel();
+        LineCover_panel = new LineCover_Panel();
 
         //    ==== SET BUTTONS TO BOTTOM PANEL ====
         runAlgoButton = new JButton(runAlg);
@@ -82,11 +82,11 @@ public class Edmonds_FramePanel extends JPanel implements ActionListener{
         }
         JScrollPane jScrollPane = new JScrollPane(jEditorPane);
 
-        panes.add("Algorithm", edmondsPanel);
+        panes.add("Algorithm", LineCover_panel);
         panes.add("Explanation", jScrollPane);
         buttonsPanel.setBackground(Color.DARK_GRAY);
 
-        edmondsPanel.add(buttonsPanel, BorderLayout.SOUTH);
+        LineCover_panel.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.add(panes);
     }
@@ -98,22 +98,22 @@ public class Edmonds_FramePanel extends JPanel implements ActionListener{
         String actionCommand = e.getActionCommand();
         switch(actionCommand){
             case runAlg:
-                edmondsPanel.runAlgo();
+                LineCover_panel.runAlgo();
                 break;
             case rndEdge:
-                edmondsPanel.addRandomEdge();
+                LineCover_panel.addRandomEdge();
                 break;
             case normalEdge:
-                edmondsPanel.addEdge();
+                LineCover_panel.addEdge();
                 break;
             case newNodes:
-                edmondsPanel.newNode();
+                LineCover_panel.newNode();
                 break;
             case clear:
-                edmondsPanel.newGraph();
+                LineCover_panel.newGraph();
                 break;
             case randomGraph:
-                edmondsPanel.randomizeGraph();
+                LineCover_panel.randomizeGraph();
                 break;
         }
     }
