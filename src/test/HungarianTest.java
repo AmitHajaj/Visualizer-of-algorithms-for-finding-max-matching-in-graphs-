@@ -31,6 +31,13 @@ public class HungarianTest {
         graph.addEdge(7, 6);
         ans.add(graph.addEdge(9, 7));//this in matching
 
+        DefaultEdge flas = graph.getEdge(0, 8);
+        if(flas != null){
+            System.err.println("Hooza!!!");
+        }else{
+            System.err.println("Fucked");
+        }
+
 
         SimpleGraph<Integer, DefaultEdge> M = Edmonds.findMaximumMatching(graph);
 

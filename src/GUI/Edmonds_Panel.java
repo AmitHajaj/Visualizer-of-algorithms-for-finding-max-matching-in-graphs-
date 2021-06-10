@@ -126,7 +126,7 @@ class Edmonds_Panel extends JPanel{
 
     // add random edge
     public void addRandomEdge() {
-        setEdge = false;
+//        setEdge = false;
         setNode = false;
         marked.clear();
 
