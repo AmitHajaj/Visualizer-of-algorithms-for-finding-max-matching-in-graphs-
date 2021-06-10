@@ -3,11 +3,11 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 
 public class Window extends JFrame{
     private static int numOfNodes = 0;
 
-    private static final long serialVersionUID = 1L;
     int px, py;
 
     //----------------------------------------------------------
@@ -36,7 +36,7 @@ public class Window extends JFrame{
     private final JPanel pages = new JPanel(new CardLayout());
     private final Hungarian_FramePanel framePanel1 = new Hungarian_FramePanel();
     private final Edmonds_FramePanel framePanel2 = new Edmonds_FramePanel();
-    private final JPanel framePanel3 = new JPanel();
+    private final LineCover_FramePanel framePanel3 = new LineCover_FramePanel();
 
     //----------------------------------------------------------
     //                          INIT
@@ -53,7 +53,7 @@ public class Window extends JFrame{
         this.setPreferredSize(new Dimension(900,500));
         this.setLocationByPlatform(true);
         this.setUndecorated(true);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/data/pokeball.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/data/NP.png")));
         this.setLayout(new BorderLayout());
         this.addOtherComponents();
         this.pack();
@@ -149,19 +149,19 @@ public class Window extends JFrame{
         sideBar.setPreferredSize(new Dimension(50, getHeight()));
         sideBar.setBackground(color_menu);
         btn_toggleMenu.setText("Open/Close Menu bar");
-        btn_page1.setText("Shortest Path");
-        btn_page2.setText("hungarian algorithm");
-        btn_page3.setText("Edmonds blossom algorithm");
+        btn_page1.setText("hungarian algorithm");
+        btn_page2.setText("Edmonds blossom algorithm");
+        btn_page3.setText("Line Cover");
 
         btn_toggleMenu.setForeground(color_text_menu);
         btn_page1.setForeground(color_text_menu);
         btn_page2.setForeground(color_text_menu);
         btn_page3.setForeground(color_text_menu);
 
-        btn_toggleMenu.setIcon(new ImageIcon(getClass().getResource("/data/rightArrow.png")));
-        btn_page1.setIcon(new ImageIcon(getClass().getResource("/data/hungarianIcon.png")));
-        btn_page2.setIcon(new ImageIcon(getClass().getResource("/data/EdmondsIcon.png")));
-        btn_page3.setIcon(new ImageIcon(getClass().getResource("/data/task3.png")));
+        btn_toggleMenu.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/rightArrow.png"))));
+        btn_page1.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/hungarianIcon.png"))));
+        btn_page2.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/EdmondsIcon.png"))));
+        btn_page3.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/data/task3.png"))));
 
         btn_toggleMenu.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt) {

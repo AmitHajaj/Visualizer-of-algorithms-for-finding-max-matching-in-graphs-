@@ -13,7 +13,6 @@ import java.util.HashSet;
 
 
 public class Hungarian_FramePanel extends JPanel implements ActionListener{
-    private static final long serialVersionUID = 1L;
 
     //  === BUTTONS ===
     JButton runAlgoButton;

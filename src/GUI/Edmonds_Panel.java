@@ -10,17 +10,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.io.Serial;
+
 import java.util.*;
 
 
 class Edmonds_Panel extends JPanel{
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+
     // == GRAPH STUFF ==
     SimpleGraph<Integer, DefaultEdge> _graph;
-    static int key = 1;
+    static int key = 0;
     Set<DefaultEdge> marked = new HashSet<>();// set of marked edges
 
     private HashMap<Integer, Point> Rvertices_locations = new HashMap<>();
@@ -93,7 +92,7 @@ class Edmonds_Panel extends JPanel{
 
     private Point getClosestVertex(Point clickLocation){
         for(Point p: vertices_locations.keySet()){
-            if(clickLocation.distance(p)<vertexClickRadius) {
+            if(clickLocation.distance(p)<vertexClickRadius)  {
                 return p;
             }
         }
@@ -135,21 +134,20 @@ class Edmonds_Panel extends JPanel{
         if(size<2){
             return;
         }
-        int rand  = (new Random().nextInt(size));
+        int srcRand  = (new Random().nextInt(size));
+        int destRand  = (new Random().nextInt(size-1));
+        if (srcRand == destRand)
+            destRand ++;
         
         for(Iterator<Integer> itr = nodes.iterator(); itr.hasNext(); i++){
             next = itr.next();
-            if (i == rand) {
-                if(src == -1){
-                    src = next;
-                    rand  = (new Random().nextInt(size-1));
-                }else {
-                    dest = next;
-                    break;
-                }
+            if (i == srcRand) {
+                src = next;
             }
-            itr.remove();
-            itr = nodes.iterator();
+            else if( i == destRand){
+                dest = next;
+            }
+
         }
 
         this._graph.addEdge(src,dest);
@@ -164,7 +162,7 @@ class Edmonds_Panel extends JPanel{
         marked.clear();
         int size = (int) (Math.random() * 20) + 1;
         for (int i = 0; i < size; i++) {
-            newNode();
+            newRndNode();
         }
 
         int e = (int) (Math.random() * 20);
@@ -175,13 +173,20 @@ class Edmonds_Panel extends JPanel{
 
     private Point locateInCircle(int i){
         Set<Integer> nodes = _graph.vertexSet();
-        Iterator<Integer> itr = nodes.iterator();
-        double radius = 2*Math.PI;
-        int r = 20, centerX = 506, centerY = 356, x, y;
+        double size = nodes.size();
 
-        double currentAngle = i * radius / nodes.size();
-        x = (int) (centerX + r * Math.cos(currentAngle));
-        y = (int) (centerY + r * Math.sin(currentAngle));
+        int height = this.getHeight()-50;
+        int width = this.getWidth()-50;
+
+        double angle = Math.toRadians(i*360/size);
+        if(i % 2 == 0)
+            angle*=-1;
+
+        int centerX = width/2, centerY = height/2, x, y;
+        double r = (Math.min(height, width)/2.5);
+
+        x = (int) (centerX + r * Math.cos(angle));
+        y = (int) (centerY + r * Math.sin(angle));
 
         return new Point(x,y);
 
@@ -193,6 +198,18 @@ class Edmonds_Panel extends JPanel{
         setNode = true;
         repaint();
     }
+
+    public void newRndNode() {
+        setEdge = false;
+        setNode = false;
+
+        _graph.addVertex(++key);
+        Point point = locateInCircle(key - 1);
+        vertices_locations.put(point, key);
+        Rvertices_locations.put(key, point);
+        repaint();
+    }
+
     public void setNode(){
         _graph.addVertex(++key);
         vertices_locations.put(dropPoint, key);

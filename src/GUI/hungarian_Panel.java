@@ -15,7 +15,6 @@ import java.util.*;
 
 class hungarian_Panel extends JPanel{
 
-    private static final long serialVersionUID = 1L;
     // == GRAPH STUFF ==
     bipartiteGraph biGraph;
     Set<DefaultEdge> marked = new HashSet<>();// set of marked edges
@@ -168,7 +167,7 @@ class hungarian_Panel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (pointStart != null) {
+        if (pointStart != null){
             g.setColor(Color.BLACK);
             g.drawLine(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
         }

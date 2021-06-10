@@ -115,7 +115,7 @@ public class Edmonds {
     private static List<Integer> findAlternatingPath(SimpleGraph<Integer, DefaultEdge> g,
                                                    SimpleGraph<Integer, DefaultEdge> m) {
         // The forest we will maintain.
-        HashMap<Integer, NodeInformation> forest = new HashMap<>();
+        Map<Integer, NodeInformation> forest = new HashMap<>();
 
         //This queue will hold the edges that not yet explored.
         //maintain somehow bfs traverse.
@@ -124,7 +124,6 @@ public class Edmonds {
         // Add each free vertex to the forest as a singleton.
         for (int node: g.vertexSet()) {
             //It is a singleton only if his neighbors are not matched.
-
             if (!edgesFrom(node, m).isEmpty())
                 continue;
 
@@ -147,32 +146,21 @@ public class Edmonds {
             int starter, finisher;
             // Take this edge source and target.
             // The condition are to adjust the source and target to fit.
-
-            if(edgesSetContains(g.getEdgeSource(curr), m)){
+            if(!forest.containsKey(g.getEdgeSource(curr))){
                 starter = g.getEdgeTarget(curr);
                 finisher = g.getEdgeSource(curr);
             }
-            else{
+            else {
                 starter = g.getEdgeSource(curr);
                 finisher = g.getEdgeTarget(curr);
             }
-
-//            if(!forest.containsKey(g.getEdgeSource(curr))){
-//                starter = g.getEdgeTarget(curr);
-//                finisher = g.getEdgeSource(curr);
-//            }
-//            else {
-//                starter = g.getEdgeSource(curr);
-//                finisher = g.getEdgeTarget(curr);
-//            }
-
             NodeInformation startInfo = forest.get(starter);
             NodeInformation endInfo = forest.get(finisher);
 
             //Here we now need to choose from 3 options.
             if (endInfo != null) {
                 // Option 1: Found an odd blossom. Contract the blossom.
-                if (endInfo.isOuter && startInfo.treeRoot == endInfo.treeRoot && !edgesSetContains(endInfo.value, m)) {
+                if (endInfo.isOuter && startInfo.treeRoot == endInfo.treeRoot) {
 
                     Blossom blossom = findBlossom(forest, startInfo.value, endInfo.value);
 
@@ -188,7 +176,7 @@ public class Edmonds {
                     return expandPath(path, g, forest, blossom);
                 }
                 // Option 2: Return the augmenting path from root to root. With the paths in each tree.
-                else if (endInfo.isOuter && startInfo.treeRoot != endInfo.treeRoot && !edgesSetContains(endInfo.value, m)) {
+                else if (endInfo.isOuter && startInfo.treeRoot != endInfo.treeRoot) {
 
                     List<Integer> result = new ArrayList<>();
 
@@ -220,7 +208,6 @@ public class Edmonds {
                         true, endPoint));
 
                 // Add the endPoint neighbors to explore list.
-                // But the whe is my parent.
                 for (DefaultEdge endPNeighbor : g.edgesOf(endPoint))
                     edgesToExplore.add(endPNeighbor);
             }
@@ -374,7 +361,7 @@ public class Edmonds {
      * @param node The node outside.
      * @return Some node on the blossom.
      */
-    private static int findNodeLeavingCycle(SimpleGraph<Integer, DefaultEdge> g, Blossom B, int node) {
+        private static int findNodeLeavingCycle(SimpleGraph<Integer, DefaultEdge> g, Blossom B, int node) {
             // Check the blossom nodes for match.
             for (int cycleNode: B.nodes)
                 if (g.getEdge(cycleNode, node) != null)
@@ -390,7 +377,7 @@ public class Edmonds {
      * @return Set of integers describes the neighbors of node.
      */
     private static Set<Integer> edgesFrom(int node, SimpleGraph<Integer, DefaultEdge> g){
-        HashSet<Integer> neighbors = new HashSet<>();
+            HashSet<Integer> neighbors = new HashSet<>();
 
         Set<DefaultEdge> edgesNeighbors =  g.edgesOf(node);
 
@@ -404,34 +391,5 @@ public class Edmonds {
         }
         return neighbors;
 
-    }
-
-    private static boolean edgesEqual(DefaultEdge first, DefaultEdge second, SimpleGraph<Integer, DefaultEdge> g){
-        int firstSrc = g.getEdgeSource(first);
-        int firstDst = g.getEdgeTarget(first);
-        int secondSrc = g.getEdgeSource(second);
-        int secondDst = g.getEdgeTarget(second);
-
-        boolean result = false;
-        if(firstSrc == secondSrc){
-            if(firstDst == secondDst){
-                result = true;
-            }
-        }
-        else if(firstSrc == secondDst){
-            if(firstDst == secondSrc){
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    private static boolean edgesSetContains(int node, SimpleGraph<Integer, DefaultEdge> g){
-        for(DefaultEdge edge : g.edgeSet()){
-            if(g.getEdgeSource(edge) == node || g.getEdgeTarget(edge) == node){
-                return true;
-            }
-        }
-        return false;
     }
 }

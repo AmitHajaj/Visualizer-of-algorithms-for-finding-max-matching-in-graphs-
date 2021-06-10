@@ -39,7 +39,9 @@ public class LineCoverAlgorithm {
         Set<Integer> nodes = getNotCovered(edges);
 
         for(Integer n: nodes) {
-            edges.add(graph.edgesOf(n).iterator().next());
+            Iterator<DefaultEdge> itr = graph.edgesOf(n).iterator();
+            if(itr.hasNext())
+                edges.add(itr.next());
         }
 
         return edges;
