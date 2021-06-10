@@ -146,7 +146,7 @@ public class Edmonds {
             int starter, finisher;
             // Take this edge source and target.
             // The condition are to adjust the source and target to fit.
-            if(!forest.containsKey(g.getEdgeSource(curr))){
+            if(isContains(g.getEdgeSource(curr), m)){
                 starter = g.getEdgeTarget(curr);
                 finisher = g.getEdgeSource(curr);
             }
@@ -158,9 +158,9 @@ public class Edmonds {
             NodeInformation endInfo = forest.get(finisher);
 
             //Here we now need to choose from 3 options.
-            if (endInfo != null) {
+            if (endInfo != null && startInfo != null) {
                 // Option 1: Found an odd blossom. Contract the blossom.
-                if (endInfo.isOuter && startInfo.treeRoot == endInfo.treeRoot) {
+                if (endInfo.isOuter && startInfo.treeRoot == endInfo.treeRoot && !isContains(endInfo.value, m)) {
 
                     Blossom blossom = findBlossom(forest, startInfo.value, endInfo.value);
 
@@ -176,7 +176,7 @@ public class Edmonds {
                     return expandPath(path, g, forest, blossom);
                 }
                 // Option 2: Return the augmenting path from root to root. With the paths in each tree.
-                else if (endInfo.isOuter && startInfo.treeRoot != endInfo.treeRoot) {
+                else if (endInfo.isOuter && startInfo.treeRoot != endInfo.treeRoot && !isContains(endInfo.value, m)) {
 
                     List<Integer> result = new ArrayList<>();
 
@@ -196,7 +196,10 @@ public class Edmonds {
             // If we got here it means that the node we got is on the matching.
             // At this case we add it to the tree with is descendant.
             // Both under the root of the calling node.
-            else {
+            else{
+                if(startInfo == null){
+                    startInfo = endInfo;
+                }
                 forest.put(finisher, new NodeInformation(startInfo.value,
                         startInfo.treeRoot,
                         false, finisher));
@@ -390,6 +393,14 @@ public class Edmonds {
             }
         }
         return neighbors;
+    }
 
+    private static boolean isContains(int node, SimpleGraph<Integer, DefaultEdge> g){
+        for(DefaultEdge edge : g.edgeSet()){
+            if(g.getEdgeSource(edge) == node || g.getEdgeTarget(edge) == node){
+                return true;
+            }
+        }
+        return false;
     }
 }

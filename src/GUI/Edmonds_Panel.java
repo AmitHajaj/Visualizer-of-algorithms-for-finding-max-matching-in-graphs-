@@ -220,6 +220,7 @@ class Edmonds_Panel extends JPanel{
     public void newGraph(){
         setEdge = false;
         setNode = false;
+        key = 0;
         marked.clear();
         vertices_locations.clear();
         Rvertices_locations.clear();
