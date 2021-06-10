@@ -4,6 +4,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 
 import java.util.HashSet;
@@ -22,14 +23,14 @@ import java.util.Set;
  *
  */
 public class Hungarian{
-    private static bipartiteGraph _graph;
+//    private static bipartiteGraph _graph;
 
     /**
      *This method will apply the Hungarian method for finding a max. matching in bipartite graphs
      * @param g - bipartite graph.
      * @return A Set of edges that would be the max. matching in this graph.
      */
-    public static Set<DefaultEdge> runAlgo(bipartiteGraph g){
+    public static Set<DefaultEdge> runAlgo(bipartiteGraph g, boolean SBS){
         Set<DefaultEdge> M = new HashSet<>();
         int bSize, aSize;
 
@@ -41,12 +42,18 @@ public class Hungarian{
 
             HashSet<Integer> ACopy = new HashSet<>(g.getA());
             HashSet<Integer> BCopy = new HashSet<>(g.getB());
+            Set<DefaultEdge> MCopy = new HashSet<>(M);
 
-            M = IsAugmenting(ACopy, BCopy, M);
-            //TODO check M for null
-            aSize = M.size();
-            if(aSize == bSize){
-                flag = false;
+            M = IsAugmenting(ACopy, BCopy, M, g);
+            //TODO: To implement step by step, we need to return the current M each time.
+            if(M != null){
+                aSize = M.size();
+                if(aSize == bSize){
+                    flag = false;
+                }
+            }
+            else{
+                return MCopy;
             }
         }
         return M;
@@ -60,7 +67,7 @@ public class Hungarian{
      @param M - a match on this graph
      @return An augmenting path for match M if there is one, or M itself if there isnt.
      */
-    public static Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Set<DefaultEdge> M){
+    public static Set<DefaultEdge> IsAugmenting(Set<Integer> A, Set<Integer> B, Set<DefaultEdge> M, bipartiteGraph _graph){
         Set<Integer> A1 = new HashSet<Integer>();
         Set<Integer> A2 = A;
         Set<Integer> B1 = new HashSet<Integer>();

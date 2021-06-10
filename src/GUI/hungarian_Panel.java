@@ -99,7 +99,7 @@ class hungarian_Panel extends JPanel{
         setEdge = false;
         marked.clear();
 
-        marked = Hungarian.runAlgo(biGraph);
+        marked = Hungarian.runAlgo(biGraph, false);
 
         repaint();
     }
