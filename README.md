@@ -11,9 +11,9 @@ Maximum matching: A maximum set as described above.
 
 
 ## The problem
-To get an intuitive understanding about the max matching lets describe a problem we want to solve.<br/>
+To get an intuitive understanding about the maximum matching lets describe a problem we want to solve.<br/>
 In one room we have many people that we want to match.<br/>
-When entering the room we ask from the each participant to write down his\her preferences to match with.<br/>
+When entering the room we ask each participant to write down his\her preferences to match with.<br/>
 
 To make the best matching(in quantity aspect) we ask the following question:<br/>
 what is maximum number of couples that i can create it this room?<br/>
